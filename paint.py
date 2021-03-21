@@ -69,17 +69,18 @@ def paint_expression(expr, currentIndent=""):
         if iden.value == "ID":
             name = iden[1][0][0]
             return paint_call(name, arg)
-    if expr.value == "complexCall":
+    if expr.value == "ComplexCall":
         out = ""
-        iden, extra = expr.children
-        out += iden.value
+        iden, *extra = expr.children
+        out += iden[1][0][0]
         for call in extra:
             if call.value == "Parg":
-                pass
+                out += "(" + paint_expression(call.children[0], currentIndent) + ")"
             if call.value == "Dcol":
-                pass
+                out += "::" + call[1][0][1][0][0]
             if call.value == "Dot":
-                pass
+                out += "." + call[1][0][1][0][0]
+        return out
 
     # Reworking this
     if expr.value == "Object":
@@ -207,11 +208,13 @@ def paint_program(instructions, currentIndent=""):
 
         if name == "Call":
             iden, arg = extra
-            # TODO: handle composition, dots & stuff
             if iden.value == "ID":
                 name = iden.children[0].value
                 calltext = paint_call(name, arg)
                 out = paintLineOn(out, f"{calltext};", currentIndent)
+        if name == "ComplexCall":
+            val = paint_expression(instr, currentIndent)
+            out = paintLineOn(out, val + ";", currentIndent)
 
         if name == "Ret":
             expr = extra[0]
@@ -233,3 +236,6 @@ use std::collections::HashMap;
 use std::any::Any;
 
 """ + paint_program(instructions)
+
+
+# %%

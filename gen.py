@@ -16,6 +16,7 @@ main := None => Void: {
     add := Int: a => Int: b => Int: c => {
         ret a + b + c;
     };
+    console.log(a);
     ret add(a)(b)::property.otherprop(c);
 };
 
