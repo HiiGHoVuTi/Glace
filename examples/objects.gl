@@ -1,0 +1,15 @@
+
+
+main := None => Void: {
+
+    obj := {
+        a <- 12,
+        b <- [0, 1, 2],
+        c <- {
+            d <- "recursion ?",
+        },
+    }
+
+    retreived := obj'(Int: a);
+
+};

@@ -1,0 +1,11 @@
+
+main := None => Void: {
+
+    Int: my_int = 0;
+    auto := 12;
+    Mut * Int: my_mutable_int = 12;
+
+    my_mutable_int <- 14;
+
+};
+

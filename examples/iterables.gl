@@ -1,0 +1,21 @@
+
+main := None => Void: {
+
+    my_array := [0, 1, 2];
+
+    my_vector := (<0, 1, 2>);
+
+    empty_twelve_ints_array := [Int ; 12];
+
+    doubled := my_vector.iter().map(x => x * 2);
+
+    tripled := my_array.iter().map(x => {
+        val := x * 3;
+        ret val;
+    })
+
+    for val in tripled.iter() {
+        print(val);
+    }
+
+};

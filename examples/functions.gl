@@ -1,0 +1,29 @@
+
+# in every gl program, there is a main function which runs automatically.
+# it doesn't need any arguments, so it takes-in "None", it doesn't return anything, so its type is "Void"
+main := None => Void: {
+
+    # here you can code
+    greetings := say_hello("World !");
+
+    # print is a macro that pretty-prints variables to the console
+    print(greetings);
+
+
+    # you can also define curried functions
+    add := Int: a => Int: b => Int: c => {
+        ret a + b + c; # ret is a lowest-scope return
+    };
+
+    # there are also anonymous functions
+    doubled := (<0, 1, 2>).iter().map(x => x * 2);
+
+
+};
+
+# a function can have an argument, you need to specify its type
+say_hello := String: name => String: {
+    return "Hello " + name; # return exits the function
+}
+
+
