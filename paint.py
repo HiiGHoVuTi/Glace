@@ -1,3 +1,6 @@
+
+from utils import Node
+
 #%%
 def paintLineOn(buff, text, indent):
     buff += indent + text + "\n"
@@ -65,17 +68,23 @@ def paint_expression(expr, currentIndent=""):
         left, right = paint_expression(left, currentIndent), paint_expression(right, currentIndent)
         return f"{left} {op.value} {right}"
     if expr.value == "Call":
-        iden, arg = expr.children
-        if iden.value == "ID":
-            name = iden[1][0][0]
-            return paint_call(name, arg)
+        if len(expr.children) > 1:
+            iden, arg = expr.children
+            if iden.value == "ID":
+                name = iden[1][0][0]
+                return paint_call(name, arg)
+        else:
+            return paint_call(expr.children[0][1][0][0], Node("ID", [Node("", [])]))
     if expr.value == "ComplexCall":
         out = ""
         iden, *extra = expr.children
         out += iden[1][0][0]
         for call in extra:
             if call.value == "Parg":
-                out += "(" + paint_expression(call.children[0], currentIndent) + ")"
+                if len(call.children) != 0:
+                    out += "(" + paint_expression(call.children[0], currentIndent) + ")"
+                else:
+                    out += "()"
             if call.value == "Dcol":
                 out += "::" + call[1][0][1][0][0]
             if call.value == "Dot":
@@ -184,6 +193,20 @@ def paint_program(instructions, currentIndent=""):
     for instr in instructions:
         name, extra = instr
 
+        if name == "Use":
+            o = ""
+            for i, e in enumerate(extra):
+                if i != len(extra) - 1:
+                    o += e[1][0][0] + "::"
+                else:
+                    if len(e[1]) == 0:
+                        o += "*;"
+                    elif e.value == "ImPack":
+                        o += "{" + ", ".join(a[1][0][0] for a in e[1]) + "};"
+                    else:
+                        o += e[1][0][0] + ";"
+            out = paintLineOn(out, f"use {o}", "")
+
         if name == "If":
             expr, block = extra
             expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
@@ -221,11 +244,14 @@ def paint_program(instructions, currentIndent=""):
 
 
         if name == "Call":
-            iden, arg = extra
-            if iden.value == "ID":
-                name = iden.children[0].value
-                calltext = paint_call(name, arg)
-                out = paintLineOn(out, f"{calltext};", currentIndent)
+            if len(extra) > 1:
+                iden, arg = extra
+                if iden.value == "ID":
+                    name = iden.children[0].value
+                    calltext = paint_call(name, arg)
+                    out = paintLineOn(out, f"{calltext};", currentIndent)
+            else:
+                out = paintLineOn(out, f"{extra[0][1][0][0]}();", currentIndent)
         if name == "ComplexCall":
             val = paint_expression(instr, currentIndent)
             out = paintLineOn(out, val + ";", currentIndent)

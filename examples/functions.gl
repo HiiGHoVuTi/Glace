@@ -4,7 +4,7 @@
 main := None => Void: {
 
     # here you can code
-    greetings := say_hello("World !");
+    greetings := sayhello("World !");
 
     # print is a macro that pretty-prints variables to the console
     print(greetings);
@@ -22,8 +22,8 @@ main := None => Void: {
 };
 
 # a function can have an argument, you need to specify its type
-say_hello := String: name => String: {
+sayhello := String: name => String: {
     return "Hello " + name; # return exits the function
-}
+};
 
 

@@ -131,10 +131,10 @@ def parse(text):
     functionExpr << argument + Literal("=>").suppress() + (expression ^ codeBlock ^ funcBody)
     functionExpr.setParseAction(minipack("Function"))
 
-    simpleCall = identifier + Literal("(").suppress() + expression + Literal(")").suppress()
+    simpleCall = identifier + Literal("(").suppress() + Optional(expression) + Literal(")").suppress()
     simpleCall.setParseAction(minipack("Call"))
     complexCall = identifier + OneOrMore(
-        (Literal("(").suppress() + expression + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
+        (Literal("(").suppress() + Optional(expression) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
         (Literal(".").suppress() + identifier).setParseAction(minipack("Dot")) ^\
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol"))
     )
@@ -147,7 +147,13 @@ def parse(text):
     retStatement.setParseAction(minipack("Ret"))
     controlStatement = returnStatement ^ retStatement
 
-    line = (declaration ^ expression ^ controlStatement ^ controlFlow) + Literal(";").suppress()
+    useStatement = Literal("use").suppress() + ZeroOrMore(
+        identifier + Literal("::").suppress()
+    ) + (identifier ^ (Literal("{").suppress() + delimitedList(identifier).setParseAction(minipack("ImPack")) + Literal("}").suppress()) ^ Literal("*").setParseAction(lambda x: Node("*", [])))
+    useStatement.setParseAction(minipack("Use"))
+    topLevel = useStatement
+
+    line = (declaration ^ expression ^ controlStatement ^ controlFlow ^ topLevel) + Literal(";").suppress()
     Program << OneOrMore(line) ^ empty
 
     return Program.parseString(text)
