@@ -1,0 +1,5 @@
+*.swp
+main
+main.rs
+test.bash
+__pycache__/
