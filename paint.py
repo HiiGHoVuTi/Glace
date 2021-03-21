@@ -106,6 +106,20 @@ def paint_expression(expr, currentIndent=""):
         prg = paint_program(expr.children, currentIndent+"\t")
         return "{\n" + prg + currentIndent + "}"
 
+    if expr.value == "Vector":
+        return "vec![" + \
+            ", ".join(str(paint_expression(e, currentIndent)) for e in expr.children) + \
+        "]"
+
+    if expr.value == "Array":
+        return "[" + \
+            ", ".join(str(paint_expression(e, currentIndent)) for e in expr.children) + \
+        "]"
+    
+    if expr.value == "FixedArray":
+        type, count = expr.children
+        return "[" + paint_type(type) + " ; " + str(paint_expression(count)) + "]"
+
     return "exprNotImplemented"
 
 def paint_function(name, tree, currentIndent=""):

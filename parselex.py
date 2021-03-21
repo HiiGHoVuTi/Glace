@@ -43,8 +43,13 @@ def parse(text):
     functionCall = Forward()
     object = Forward()
     typedDeclaration = Forward()
+    vector = Forward()
+    array = Forward()
+    fixedArray = Forward()
     codeBlock = Forward()
-    expressionAtom = (literal ^ identifier ^ functionExpr ^ functionCall ^ object ^ typedDeclaration ^ codeBlock)
+    expressionAtom = (literal ^ identifier ^ functionExpr ^ \
+        functionCall ^ object ^ typedDeclaration ^ codeBlock ^ \
+        vector ^ array ^ fixedArray)
 
 
     expression = infixNotation(expressionAtom, [
@@ -100,6 +105,15 @@ def parse(text):
     object << Literal("{").suppress() + ZeroOrMore(objAssign) + Literal("}").suppress()
     object.setParseAction(minipack("Object"))
 
+    vector << Literal("(<").suppress() + delimitedList(expression) + Literal(">)").suppress()
+    vector.setParseAction(minipack("Vector"))
+
+    array << Literal("[").suppress() + delimitedList(expression) + Literal("]").suppress()
+    array.setParseAction(minipack("Array"))
+
+    fixedArray << Literal("[").suppress() + typeNotation + Literal(";").suppress() + expression + Literal("]").suppress()
+    fixedArray.setParseAction(minipack("FixedArray"))
+
     codeBlock << Literal("{").suppress() + Program + Literal("}").suppress()
     codeBlock.setParseAction(minipack("Block"))
 
@@ -137,3 +151,5 @@ def parse(text):
     Program << OneOrMore(line) ^ empty
 
     return Program.parseString(text)
+
+# %%
