@@ -1,28 +1,23 @@
 
-#%%
-from utils import Node, print_tree
 from parselex import parse, lex
 from paint import paint_total
 
+import sys
+args = sys.argv[1:]
+try:
+    src, trg = args
+except:
+    raise NotImplementedError("Invalid CLI arguments.")
 
-#%%
-to_fix = """
-val = object(Obj: a)'(Int: b);
-"""
+with open(src) as f:
+    contents = f.read()
+    out = paint_total(parse(lex(contents)))
 
-tree = Node("Program", parse(lex("""
-main := None => Void: {
-    # console.print(a); # to fix
-    add := Int: a => Int: b => Int: c => {
-        ret a + b + c;
-    };
-    console.log(a);
-    ret add(a)(b)::property.otherprop(c);
-};
+try:
+    with open(trg, "x") as f:
+        pass
+except:
+    pass
+with open(trg, "w") as f:
+    f.write(out)
 
-
-""")))
-print_tree(tree)
-print(paint_total(tree.children))
-
-# %%

@@ -1,5 +1,8 @@
 *.swp
+tests.py
 main
 main.rs
+helloworld.rs
+helloworld
 test.bash
 __pycache__/

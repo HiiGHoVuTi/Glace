@@ -1,7 +1,5 @@
 
-main := None => {
-
+main := None => Void: {
     message := "Hello, World !";
-    print(message)
-
+    print(message);
 };
