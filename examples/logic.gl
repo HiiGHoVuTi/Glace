@@ -6,16 +6,16 @@ main := None => Void: {
     # if statements don't need braces, like in Rust
     if age > 20 {
         print("probably old enough to drive");
-    }
+    };
 
     # ranges of values
     for i in 0..12 {
         print(i);
-    }
+    };
 
     # map over an array
     for a in [0, 1, 2].iter() {
         print(a);
-    }
+    };
 
 };

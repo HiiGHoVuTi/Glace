@@ -2,6 +2,7 @@
 tests.py
 main
 main.rs
+main.gl
 helloworld.rs
 helloworld
 test.bash

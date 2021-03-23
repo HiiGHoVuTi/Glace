@@ -1,6 +1,6 @@
 
-from parselex import parse, lex
-from paint import paint_total
+from common.parselex import parse, lex
+from rust.paint import paint_total
 
 import sys
 args = sys.argv[1:]

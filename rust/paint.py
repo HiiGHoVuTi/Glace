@@ -1,5 +1,7 @@
 
-from utils import Node
+import sys
+sys.path.append("..")
+from common.utils import Node
 
 #%%
 def paintLineOn(buff, text, indent):

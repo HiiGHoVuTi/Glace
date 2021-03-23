@@ -3,7 +3,9 @@
 from pyparsing import *
 import pyparsing
 ParserElement.enablePackrat()
-from utils import Node
+import sys
+sys.path.append("..")
+from common.utils import Node
 
 #%%
 def lex(raw):
@@ -30,7 +32,7 @@ def parse(text):
     boolLiteral = oneOf(["true", "false"])
     boolLiteral.setParseAction(lambda x: Node("Bool", pack(x)))
 
-    identifier = Word(alphanums)
+    identifier = Word(alphanums + "_")
     identifier.setParseAction(lambda x: Node("ID", pack(x)))
 
     literalKeyWord = Literal("None")
@@ -53,12 +55,13 @@ def parse(text):
 
 
     expression = infixNotation(expressionAtom, [
-        (oneOf(["in"]), 2, opAssoc.LEFT),
-        (oneOf(["==", "!=", "<", ">", "<=", ">="]), 2, opAssoc.LEFT),
-        (oneOf(["*", "/", "//"]), 2, opAssoc.LEFT),
-        (oneOf(["+", "-"]), 2, opAssoc.LEFT),
         (oneOf(["'", ".", "::"]), 2, opAssoc.LEFT),
         (oneOf([".."]), 2, opAssoc.LEFT),
+        (oneOf(["*", "/", "//"]), 2, opAssoc.LEFT),
+        (oneOf(["+", "-"]), 2, opAssoc.LEFT),
+        (oneOf(["%"]), 2, opAssoc.LEFT),
+        (oneOf(["==", "!=", "<", ">", "<=", ">="]), 2, opAssoc.LEFT),
+        (oneOf(["in"]), 2, opAssoc.LEFT),
     ])
     def binOP_parse(name, arr):
         def force(a):
