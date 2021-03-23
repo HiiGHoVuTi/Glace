@@ -35,6 +35,10 @@ def paint_call(name, args):
     argText = ", ".join(str(paint_expression(arg)) for arg in args)
     if name == "print":
         return 'println!("{:#?}", ' + argText + ")"
+    if name == "Box":
+        return f"Box::new({argText})"
+    if name == "Unbox":
+        return f"*{argText}"
     return f"{name}({argText})"
 
 
@@ -71,7 +75,7 @@ def paint_expression(expr, currentIndent=""):
         return f"{left} {op.value} {right}"
     if expr.value == "Call":
         if len(expr.children) > 1:
-            iden, arg = expr.children
+            iden, *arg = expr.children
             if iden.value == "ID":
                 name = iden[1][0][0]
                 return paint_call(name, arg)
