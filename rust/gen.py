@@ -1,4 +1,6 @@
 
+import sys
+sys.path.append("..")
 from common.parselex import parse, lex
 from rust.paint import paint_total
 

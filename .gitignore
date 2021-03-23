@@ -6,4 +6,5 @@ main.gl
 helloworld.rs
 helloworld
 test.bash
-__pycache__/
+*/__pycache__/
+/__pycache__/

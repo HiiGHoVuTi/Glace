@@ -7,5 +7,5 @@ do
     esac
 done
 
-python3 ./gen.py $source $output
+python3 ./rust/gen.py $source $output
 rustc $output
