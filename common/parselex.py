@@ -76,14 +76,16 @@ def parse(text):
 
 
     # expressionAtom << functionExpr
-
-    typeNotation = infixNotation(identifier, [
+    generic = Forward()
+    typeNotation = infixNotation(identifier ^ generic, [
         (oneOf(["->"]), 2, opAssoc.LEFT),
         (oneOf(["*"]), 2, opAssoc.LEFT),
         (oneOf(["|"]), 2, opAssoc.LEFT),
     ])
     typeNotation.setParseAction(lambda x: binOP_parse("TypeExpr", x[0]))
 
+    generic << (identifier + Literal("{").suppress() +\
+        delimitedList(typeNotation) + Literal("}").suppress()).setParseAction(minipack("Generic"))
 
     autoDeclaration = identifier + Literal(":=").suppress() + expression
     autoDeclaration.setParseAction(minipack("AutoDecl"))

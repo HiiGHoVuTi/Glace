@@ -9,6 +9,12 @@ def paintLineOn(buff, text, indent):
     return buff
 
 def paint_type(typeName):
+
+    if typeName.value == "Generic":
+        base, *args = typeName.children
+        base, args = paint_type(base), [paint_type(arg) for arg in args]
+        return f"{base}<{', '.join(args)}>"
+
     # handle combos
     # TODO
     if typeName.value == "TypeExpr":
@@ -30,6 +36,7 @@ def paint_type(typeName):
         if name == "Obj":
             return "HashMap<&str, Box<dyn Any + 'static>>"
         return name
+    return "typeNotImplemented"
 
 def paint_call(name, args):
     argText = ", ".join(str(paint_expression(arg)) for arg in args)
