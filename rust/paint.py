@@ -87,6 +87,11 @@ def paint_expression(expr, currentIndent=""):
                     out += "(" + paint_expression(call.children[0], currentIndent) + ")"
                 else:
                     out += "()"
+            if call.value == "Aidx":
+                if len(call.children) != 0:
+                    out += "[" + paint_expression(call.children[0], currentIndent) + "]"
+                else:
+                    out += "[:]"
             if call.value == "Dcol":
                 out += "::" + call[1][0][1][0][0]
             if call.value == "Dot":
