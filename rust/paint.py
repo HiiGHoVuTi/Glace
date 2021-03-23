@@ -31,8 +31,8 @@ def paint_type(typeName):
             return "HashMap<&str, Box<dyn Any + 'static>>"
         return name
 
-def paint_call(name, arg):
-    argText = paint_expression(arg)
+def paint_call(name, args):
+    argText = ", ".join(str(paint_expression(arg)) for arg in args)
     if name == "print":
         return 'println!("{:#?}", ' + argText + ")"
     return f"{name}({argText})"
@@ -83,13 +83,12 @@ def paint_expression(expr, currentIndent=""):
         out += iden[1][0][0]
         for call in extra:
             if call.value == "Parg":
-                if len(call.children) != 0:
-                    out += "(" + paint_expression(call.children[0], currentIndent) + ")"
-                else:
-                    out += "()"
+                out += "(" + \
+                    ", ".join(str(paint_expression(child, currentIndent))
+                        for child in call.children) + ")"
             if call.value == "Aidx":
                 if len(call.children) != 0:
-                    out += "[" + paint_expression(call.children[0], currentIndent) + "]"
+                    out += "[" + str(paint_expression(call.children[0], currentIndent)) + "]"
                 else:
                     out += "[:]"
             if call.value == "Dcol":
@@ -144,13 +143,13 @@ def paint_function(name, tree, currentIndent=""):
     # Normal function
     if body.value == "FunctionBody":
         argsText = ""
-        # TODO rework the multi-arg logic
-        if argument.value != "None":
-            argument = argument.children[0]
-            if argument.value == "TypedDecl":
-                argName, type = argument[1][1][1][0][0], paint_type(argument.children[0])
-                argsText = f"{argName}: {type}"
-
+        if argument.children[0].value != "None":
+            argsText = ""
+            for argument in argument.children:
+                if argument.value == "TypedDecl":
+                    argName, type = argument[1][1][1][0][0], paint_type(argument.children[0])
+                    argsText += f"{argName}: {type}, "
+            argsText = argsText[:-2]
         retType, retValue = body.children
         outputType = paint_type(retType)
 
@@ -252,10 +251,10 @@ def paint_program(instructions, currentIndent=""):
 
         if name == "Call":
             if len(extra) > 1:
-                iden, arg = extra
+                iden, *args = extra
                 if iden.value == "ID":
                     name = iden.children[0].value
-                    calltext = paint_call(name, arg)
+                    calltext = paint_call(name, args)
                     out = paintLineOn(out, f"{calltext};", currentIndent)
             else:
                 out = paintLineOn(out, f"{extra[0][1][0][0]}();", currentIndent)

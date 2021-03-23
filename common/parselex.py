@@ -127,20 +127,20 @@ def parse(text):
 
     controlFlow = ifStatement ^ forStatement
 
-    argument = (typedDeclaration ^ literal ^ identifier)
+    argument = delimitedList(typedDeclaration ^ literal ^ identifier)
     argument.setParseAction(minipack("Argument"))
     funcBody = typeNotation + Literal(":").suppress() + (expression ^ codeBlock)
     funcBody.setParseAction(minipack("FunctionBody"))
     functionExpr << argument + Literal("=>").suppress() + (expression ^ codeBlock ^ funcBody)
     functionExpr.setParseAction(minipack("Function"))
 
-    simpleCall = identifier + Literal("(").suppress() + Optional(expression) + Literal(")").suppress()
+    simpleCall = identifier + Literal("(").suppress() + delimitedList(expression) + Literal(")").suppress()
     simpleCall.setParseAction(minipack("Call"))
     complexCall = identifier + OneOrMore(
-        (Literal("(").suppress() + Optional(expression) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
+        (Literal("(").suppress() + delimitedList(expression) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
         (Literal(".").suppress() + identifier).setParseAction(minipack("Dot")) ^\
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol")) ^\
-        (Literal("[").suppress() + Optional(expression) + Literal("]").suppress()).setParseAction(minipack("Aidx"))
+        (Literal("[").suppress() + delimitedList(expression) + Literal("]").suppress()).setParseAction(minipack("Aidx"))
     )
     complexCall.setParseAction(minipack("ComplexCall"))
     functionCall << (simpleCall ^ complexCall)
