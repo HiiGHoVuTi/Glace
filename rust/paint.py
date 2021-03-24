@@ -29,6 +29,10 @@ def paint_type(typeName):
         name = typeName.children[0].value
         if name == "Int":
             return "i32"
+        if name == "uSize":
+            return "usize"
+        if name == "Float":
+            return "f32"
         if name == "String":
             return "String"
         if name == "Mut":
@@ -44,8 +48,10 @@ def paint_call(name, args):
         return 'println!("{:#?}", ' + argText + ")"
     if name == "Box":
         return f"Box::new({argText})"
+    if name == "Ref":
+        return f"&({argText})"
     if name == "Unbox":
-        return f"*{argText}"
+        return f"*({argText})"
     return f"{name}({argText})"
 
 
@@ -181,14 +187,21 @@ def paint_function(name, tree, currentIndent=""):
     # Lambda
     else:
         argsText = ""
-        # TODO same rework as above
-        if argument.value != "None":
-            if argument.children[0][1][0].value != "ID":
+        if argument.children[0].value != "None":
+            for argument in argument.children:
+                if argument.value == "TypedDecl":
+                    argName, type = argument[1][1][1][0][0], paint_type(argument.children[0])
+                    argsText += f"{argName}: {type}, "
+                else:
+                    argsText += argument.children[0][0] + ", "
+            """if argument.children[0][1][0].value != "ID":
                 argsText = argument.children[0][1][0].value
             else:
                 argName = argument.children[0][1][1][1][0][0]
                 type    = paint_type(argument.children[0][1][0])
                 argsText = f"{argName} : {type}"
+            """
+            argsText = argsText[:-2]
         bodyText = compl = ""
         if body.value == "Block":
             bodyText = "{\n" + paint_program(body.children, currentIndent+"\t") + currentIndent + "}"
@@ -283,6 +296,9 @@ def paint_program(instructions, currentIndent=""):
                     else:
                         o += e[1][0][0] + ";"
             out = paintLineOn(out, f"use {o}", "")
+        if name == "ExternCrate":
+            crate = extra[0].children[0].value
+            out = paintLineOn(out, f"extern crate {crate};", "")
 
         if name == "If":
             expr, block = extra
@@ -292,7 +308,11 @@ def paint_program(instructions, currentIndent=""):
             expr, block = extra
             expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
             out = paintLineOn(out, f"for {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
-
+        if name == "while":
+            expr, block = extra
+            expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
+            out = paintLineOn(out, f"while {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
+        
         if name == "TVDecl":
             vartype, iden, value = extra
             varname = iden.children[0].value

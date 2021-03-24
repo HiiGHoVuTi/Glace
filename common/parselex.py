@@ -62,7 +62,7 @@ def parse(text):
         (oneOf(["+", "-"]), 2, opAssoc.LEFT),
         (oneOf(["%"]), 2, opAssoc.LEFT),
         (oneOf(["==", "!=", "<", ">", "<=", ">="]), 2, opAssoc.LEFT),
-        (oneOf(["in"]), 2, opAssoc.LEFT),
+        (oneOf(["in", "="]), 2, opAssoc.LEFT),
     ])
     def binOP_parse(name, arr):
         def force(a):
@@ -133,8 +133,10 @@ def parse(text):
     ifStatement.setParseAction(minipack("If"))
     forStatement = Literal("for").suppress() + expression + codeBlock
     forStatement.setParseAction(minipack("For"))
+    whileStatement = Literal("while").suppress() + expression + codeBlock
+    whileStatement.setParseAction(minipack("while"))
 
-    controlFlow = ifStatement ^ forStatement
+    controlFlow = ifStatement ^ forStatement ^ whileStatement
 
     argument = delimitedList(typedDeclaration ^ literal ^ identifier)
     argument.setParseAction(minipack("Argument"))
@@ -162,11 +164,13 @@ def parse(text):
     retStatement.setParseAction(minipack("Ret"))
     controlStatement = returnStatement ^ retStatement
 
+    externCrate = Literal("extern").suppress() + Literal("crate").suppress() + identifier
+    externCrate.setParseAction(minipack("ExternCrate"))
     useStatement = Literal("use").suppress() + ZeroOrMore(
         identifier + Literal("::").suppress()
     ) + (identifier ^ (Literal("{").suppress() + delimitedList(identifier).setParseAction(minipack("ImPack")) + Literal("}").suppress()) ^ Literal("*").setParseAction(lambda x: Node("*", [])))
     useStatement.setParseAction(minipack("Use"))
-    topLevel = useStatement
+    topLevel = useStatement ^ externCrate
 
     line = (declaration ^ expression ^ controlStatement ^ controlFlow ^ topLevel) + Literal(";").suppress()
     Program << OneOrMore(line) ^ empty
