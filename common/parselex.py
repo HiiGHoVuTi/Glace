@@ -143,15 +143,15 @@ def parse(text):
     functionExpr << argument + Literal("=>").suppress() + (expression ^ codeBlock ^ funcBody)
     functionExpr.setParseAction(minipack("Function"))
 
-    simpleCall = identifier + Literal("(").suppress() + delimitedList(expression) + Literal(")").suppress()
+    simpleCall = identifier + Literal("(").suppress() + Optional(delimitedList(expression)) + Literal(")").suppress()
     simpleCall.setParseAction(minipack("Call"))
     complexCall = (identifier ^ literal) + OneOrMore(
-        (Literal("(").suppress() + delimitedList(expression) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
+        (Literal("(").suppress() + Optional(delimitedList(expression)) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
         (Literal(".").suppress() + identifier).setParseAction(minipack("Dot")) ^\
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol")) ^\
         (Literal("{").suppress() + delimitedList((identifier + Literal(":").suppress() + expression
             ).setParseAction(minipack("Kwarg"))) + Literal("}").suppress()).setParseAction(minipack("Spawn")) ^\
-        (Literal("[").suppress() + delimitedList(expression) + Literal("]").suppress()).setParseAction(minipack("Aidx"))
+        (Literal("[").suppress() + Optional(delimitedList(expression)) + Literal("]").suppress()).setParseAction(minipack("Aidx"))
     )
     complexCall.setParseAction(minipack("ComplexCall"))
     functionCall << (simpleCall ^ complexCall)
