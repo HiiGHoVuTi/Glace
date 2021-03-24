@@ -207,8 +207,8 @@ def paint_struct(name, tree, currentIndent=""):
 
     out = ""
 
-    for sections in sections:
-        secName, *program = sections.children
+    for section in sections:
+        secName, *program = section.children
         if secName[1][0].value == "data":
             out += f"struct {name}" + " {\n" + currentIndent
             for decl in program:
@@ -237,7 +237,25 @@ def paint_struct(name, tree, currentIndent=""):
     return out
 
 def paint_trait(name, tree, currentIndent=""):
-    return ""
+    _, *sections = tree.children
+
+    out = ""
+
+    for section in sections:
+        secName, *program = section.children
+        if secName[1][0].value == "methods":
+            out += currentIndent + f"trait {name}" + "{\n" + currentIndent
+            for decl in program:
+                funcName, func = decl.children
+                funcName = funcName[1][0][0]
+                inTypes = ", ".join(f"{a[1][1][1][0][0]}: {a[1][0][1][0][0]}" 
+                        for a in func.children[0].children)
+                outType = paint_type(func.children[1])
+                body = f"fn {funcName}({inTypes}) -> {outType};".replace(" -> Void", "")
+                out += "\t" + body.replace(f"self: {name}", "&self") + "\n" + currentIndent
+            out += "}\n" + currentIndent
+
+    return out
 
 
 #%%
