@@ -3,7 +3,7 @@
 
 Glace is a multipurpose language transpiled to Rust. It takes from functional languages and tries to have a straightforward approach to logic in general.
 
-> a proper README.md is on its way :)
+> a proper README.md is on its way :), in the meantime, go look at [my website](https://maxime.gq/My-Languages/2021/03/glace-docs/)
 
 ## Installation
 
