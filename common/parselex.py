@@ -49,9 +49,10 @@ def parse(text):
     array = Forward()
     fixedArray = Forward()
     codeBlock = Forward()
+    macro = Forward()
     expressionAtom = (literal ^ identifier ^ functionExpr ^ \
         functionCall ^ object ^ typedDeclaration ^ codeBlock ^ \
-        vector ^ array ^ fixedArray)
+        vector ^ array ^ fixedArray ^ macro)
 
 
     expression = infixNotation(expressionAtom, [
@@ -121,6 +122,12 @@ def parse(text):
 
     codeBlock << Literal("{").suppress() + Program + Literal("}").suppress()
     codeBlock.setParseAction(minipack("Block"))
+
+    macro << identifier + Literal("!").suppress() + Literal("{").suppress() + OneOrMore(
+        (Literal("[").suppress() + typeNotation + Literal("]").suppress() +\
+        Program).setParseAction(minipack("MacroSection"))
+    ) + Literal("}").suppress()
+    macro.setParseAction(minipack("MacroCall"))
 
     ifStatement = Literal("if").suppress() + expression + codeBlock
     ifStatement.setParseAction(minipack("If"))

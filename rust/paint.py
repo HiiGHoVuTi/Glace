@@ -202,6 +202,43 @@ def paint_function(name, tree, currentIndent=""):
         return f"let {name} = |{argsText}|{compl} {bodyText};" + "\n"
 
 
+def paint_struct(name, tree, currentIndent=""):
+    _, *sections = tree.children
+
+    out = ""
+
+    for sections in sections:
+        secName, *program = sections.children
+        if secName[1][0].value == "data":
+            out += f"struct {name}" + " {\n" + currentIndent
+            for decl in program:
+                type, val = decl.children
+                type = paint_type(type)
+                out += "\t" + f"{val[1][0][0]}: {type}," + "\n" + currentIndent
+            out += "}\n" + currentIndent
+        if secName[1][0].value == "methods":
+            out += f"impl {name}" + " {\n" + currentIndent
+            for decl in program:
+                funcName, func = decl.children
+                funcName = funcName[1][0][0]
+                body = paint_function(funcName, func, currentIndent + "\t")
+                out += "\t" + body.replace(f"self: {name}", "&self")
+            out += "}\n" + currentIndent
+        if secName.value == "Generic":
+            if secName[1][0][1][0].value == "methods":
+                traitName = secName[1][1][1][0].value
+                out += f"impl {traitName} for {name}" + " {\n" + currentIndent
+                for decl in program:
+                    funcName, func = decl.children
+                    funcName = funcName[1][0][0]
+                    body = paint_function(funcName, func, currentIndent + "\t")
+                    out += "\t" + body.replace(f"self: {name}", "&self")
+                out += "}\n" + currentIndent
+    return out
+
+def paint_trait(name, tree, currentIndent=""):
+    return ""
+
 
 #%%
 def paint_program(instructions, currentIndent=""):
@@ -250,6 +287,13 @@ def paint_program(instructions, currentIndent=""):
             if value.value == "Function": # declare a function
                 functext = paint_function(varname, value, currentIndent)
                 out += currentIndent + functext
+            elif value.value == "MacroCall":
+                if value.children[0].children[0].value == "Struct":
+                    structext = paint_struct(varname, value, currentIndent)
+                    out += currentIndent + structext
+                if value.children[0].children[0].value in ["Blueprint", "Trait"]:
+                    traitext = paint_trait(varname, value, currentIndent)
+                    out += currentIndent + traitext
             else: # use the let keyword without any typing concerns
                 varvalue = paint_expression(value, currentIndent)
                 out = paintLineOn(out, f"let {varname} = {varvalue};", currentIndent)
