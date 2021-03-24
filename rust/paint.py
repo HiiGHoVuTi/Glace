@@ -30,7 +30,7 @@ def paint_type(typeName):
         if name == "Int":
             return "i32"
         if name == "String":
-            return "string"
+            return "String"
         if name == "Mut":
             return "mut"
         if name == "Obj":
@@ -102,6 +102,11 @@ def paint_expression(expr, currentIndent=""):
                     out += "[" + str(paint_expression(call.children[0], currentIndent)) + "]"
                 else:
                     out += "[:]"
+            if call.value == "Spawn":
+                out += "{ " + \
+                    ", ".join(kwarg.children[0][1][0][0] + ": " + \
+                        str(paint_expression(kwarg.children[1], currentIndent))
+                        for kwarg in call.children) + " }"
             if call.value == "Dcol":
                 out += "::" + call[1][0][1][0][0]
             if call.value == "Dot":
@@ -244,7 +249,7 @@ def paint_trait(name, tree, currentIndent=""):
     for section in sections:
         secName, *program = section.children
         if secName[1][0].value == "methods":
-            out += currentIndent + f"trait {name}" + "{\n" + currentIndent
+            out += currentIndent + f"trait {name}" + " {\n" + currentIndent
             for decl in program:
                 funcName, func = decl.children
                 funcName = funcName[1][0][0]
@@ -293,11 +298,11 @@ def paint_program(instructions, currentIndent=""):
             varname = iden.children[0].value
             typeText = paint_type(vartype)
             varvalue = paint_expression(value, currentIndent)
-            mods = None
+            mods = ""
             if "mut" in typeText:
                 mods = "mut"
                 typeText = typeText.replace("mut ", "")
-            out = paintLineOn(out, f"let {mods}{' ' if mods!=None else ''}{varname}: {typeText} = {varvalue};", currentIndent)
+            out = paintLineOn(out, f"let {mods}{' ' if mods!='' else ''}{varname}: {typeText} = {varvalue};", currentIndent)
 
         if name == "AutoDecl":
             iden, value = extra

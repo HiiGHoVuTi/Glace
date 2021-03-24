@@ -145,10 +145,12 @@ def parse(text):
 
     simpleCall = identifier + Literal("(").suppress() + delimitedList(expression) + Literal(")").suppress()
     simpleCall.setParseAction(minipack("Call"))
-    complexCall = identifier + OneOrMore(
+    complexCall = (identifier ^ literal) + OneOrMore(
         (Literal("(").suppress() + delimitedList(expression) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
         (Literal(".").suppress() + identifier).setParseAction(minipack("Dot")) ^\
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol")) ^\
+        (Literal("{").suppress() + delimitedList((identifier + Literal(":").suppress() + expression
+            ).setParseAction(minipack("Kwarg"))) + Literal("}").suppress()).setParseAction(minipack("Spawn")) ^\
         (Literal("[").suppress() + delimitedList(expression) + Literal("]").suppress()).setParseAction(minipack("Aidx"))
     )
     complexCall.setParseAction(minipack("ComplexCall"))
