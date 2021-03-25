@@ -249,7 +249,11 @@ def paint_struct(name, tree, currentIndent=""):
             for decl in program:
                 type, val = decl.children
                 type = paint_type(type)
-                out += "\t" + f"{val[1][0][0]}: {type}," + "\n" + currentIndent
+                fname, pub = val[1][0][0], ""
+                if "pub_" in fname:
+                    pub = "pub "
+                    fname = fname.split("pub_")[-1]
+                out += "\t" + f"{pub}{fname}: {type}," + "\n" + currentIndent
             out += "}\n" + currentIndent
         if secName[1][0].value == "methods":
             out += f"impl {name}" + " {\n" + currentIndent
