@@ -2,7 +2,7 @@
 #%%
 from pyparsing import *
 import pyparsing
-ParserElement.enablePackrat()
+ParserElement.enablePackrat(cache_size_limit=1024)
 import sys
 sys.path.append("..")
 from common.utils import Node
@@ -64,6 +64,7 @@ def parse(text):
         (oneOf(["%"]), 2, opAssoc.LEFT),
         (oneOf(["==", "!=", "<", ">", "<=", ">="]), 2, opAssoc.LEFT),
         (oneOf(["in", "="]), 2, opAssoc.LEFT),
+        (oneOf(["&&", "||"]), 2, opAssoc.LEFT),
     ])
     def binOP_parse(name, arr):
         def force(a):
@@ -106,7 +107,8 @@ def parse(text):
             Literal("=").suppress() + expression
     typedAndValuedDeclaration.setParseAction(minipack("TVDecl"))
 
-    reassignment = identifier + Literal("<-").suppress() + expression
+    reassignment = (identifier + ZeroOrMore(Literal(".").suppress() + identifier)).setParseAction(minipack("CID")) +\
+        Literal("<-").suppress() + expression
     reassignment.setParseAction(minipack("Reassign"))
 
     declaration = autoDeclaration ^ typedAndValuedDeclaration ^ typedDeclaration ^ valuedDeclaration ^ reassignment

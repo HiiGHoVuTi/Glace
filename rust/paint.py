@@ -41,9 +41,11 @@ def paint_type(typeName):
             return "f32"
         if name == "String":
             return "String"
+        if name == "Bool":
+            return "bool"
         if name == "Mut":
             return "mut"
-        if name == "Obj":
+        if name in ["Obj", "Object"]:
             return "HashMap<&str, Box<dyn Any + 'static>>"
         return name
     return "typeNotImplemented"
@@ -62,6 +64,9 @@ def paint_call(name, args):
 
 
 def paint_expression(expr, currentIndent=""):
+
+    if expr.value == "None":
+        return expr.value
 
     if expr.value == "String" or expr.value == "Number":
         return expr.children[0].value
@@ -260,7 +265,8 @@ def paint_struct(name, tree, currentIndent=""):
             for decl in program:
                 funcName, func = paint_varname(decl.children)
                 body = paint_function(funcName, func, currentIndent + "\t")
-                out += "\t" + body.replace(f"self: {name}", "&self")
+                out += "\t" + body.replace(f"self: {name}", "&self")\
+                    .replace(f"self: mut {name}", f"&mut self")
             out += "}\n" + currentIndent
         if secName.value == "Generic":
             if secName[1][0][1][0].value == "methods":
@@ -269,7 +275,8 @@ def paint_struct(name, tree, currentIndent=""):
                 for decl in program:
                     funcName, func = paint_varname(decl.children)
                     body = paint_function(funcName, func, currentIndent + "\t")
-                    out += "\t" + body.replace(f"self: {name}", "&self")
+                    out += "\t" + body.replace(f"self: {name}", "&self")\
+                        .replace(f"self: mut {name}", "&mut self")
                 out += "}\n" + currentIndent
     return out
 
@@ -292,7 +299,8 @@ def paint_trait(name, tree, currentIndent=""):
                         for a in func.children[0].children)
                 outType = paint_type(func.children[1])
                 body = f"fn {funcName}({inTypes}) -> {outType};".replace(" -> Void", "")
-                out += "\t" + body.replace(f"self: {name}", "&self") + "\n" + currentIndent
+                out += "\t" + body.replace(f"self: {name}", "&self")\
+                    .replace(f"self: mut {name}", "&mut self") + "\n" + currentIndent
             out += "}\n" + currentIndent
 
     return out
@@ -384,7 +392,9 @@ def paint_program(instructions, currentIndent=""):
                 out = paintLineOn(out, f"let {varname} = {varvalue};", currentIndent)
         if name == "Reassign":
             iden, value = extra
-            varname = iden.children[0].value
+            varname = iden.children[0].children[0].value
+            for extra in iden.children[1:]:
+                varname += "." + extra.children[0].value
             varvalue = paint_expression(value)
             out = paintLineOn(out, f"{varname} = {varvalue};", currentIndent)
 
