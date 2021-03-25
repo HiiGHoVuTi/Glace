@@ -13,6 +13,8 @@ def paint_type(typeName):
     if typeName.value == "Generic":
         base, *args = typeName.children
         base, args = paint_type(base), [paint_type(arg) for arg in args]
+        if base == "Ref":
+            return f"&{args[0]}"
         return f"{base}<{', '.join(args)}>"
 
     # handle combos
@@ -85,6 +87,8 @@ def paint_expression(expr, currentIndent=""):
             out += f'.get("{varname[1][0][0]}").unwrap().downcast_ref::<{vartype}>().unwrap()'
             return out
         left, right = paint_expression(left, currentIndent), paint_expression(right, currentIndent)
+        if op.value == "=":
+            left = f"let {left}"
         return f"{left} {op.value} {right}"
     if expr.value == "Call":
         if len(expr.children) > 1:
@@ -183,7 +187,12 @@ def paint_function(name, tree, currentIndent=""):
 
         outputText = f" -> {outputType}" if outputType != "Void" else ""
 
-        return f"fn {name}({argsText}){outputText} " + "{" + f"\n{bodyText}{currentIndent}" + "}\n"
+        pub = ""
+        if len(name.split("pub_")) > 1:
+            pub = "pub "
+            name = name.split("pub_")[-1]
+
+        return f"{pub}fn {name}({argsText}){outputText} " + "{" + f"\n{bodyText}{currentIndent}" + "}\n"
     # Lambda
     else:
         argsText = ""
@@ -228,7 +237,11 @@ def paint_struct(name, tree, currentIndent=""):
     for section in sections:
         secName, *program = section.children
         if secName[1][0].value == "data":
-            out += f"struct {name}" + " {\n" + currentIndent
+            pub = ""
+            if len(name.split("pub_")) > 1:
+                pub = "pub "
+                name = name.split("pub_")[-1]
+            out += f"{pub}struct {name}" + " {\n" + currentIndent
             for decl in program:
                 type, val = decl.children
                 type = paint_type(type)
@@ -237,8 +250,7 @@ def paint_struct(name, tree, currentIndent=""):
         if secName[1][0].value == "methods":
             out += f"impl {name}" + " {\n" + currentIndent
             for decl in program:
-                funcName, func = decl.children
-                funcName = funcName[1][0][0]
+                funcName, func = paint_varname(decl.children)
                 body = paint_function(funcName, func, currentIndent + "\t")
                 out += "\t" + body.replace(f"self: {name}", "&self")
             out += "}\n" + currentIndent
@@ -247,8 +259,7 @@ def paint_struct(name, tree, currentIndent=""):
                 traitName = secName[1][1][1][0].value
                 out += f"impl {traitName} for {name}" + " {\n" + currentIndent
                 for decl in program:
-                    funcName, func = decl.children
-                    funcName = funcName[1][0][0]
+                    funcName, func = paint_varname(decl.children)
                     body = paint_function(funcName, func, currentIndent + "\t")
                     out += "\t" + body.replace(f"self: {name}", "&self")
                 out += "}\n" + currentIndent
@@ -262,11 +273,14 @@ def paint_trait(name, tree, currentIndent=""):
     for section in sections:
         secName, *program = section.children
         if secName[1][0].value == "methods":
-            out += currentIndent + f"trait {name}" + " {\n" + currentIndent
+            pub = ""
+            if len(name.split("pub_")) > 1:
+                pub = "pub "
+                name = name.split("pub_")[-1]
+            out += currentIndent + f"{pub}trait {name}" + " {\n" + currentIndent
             for decl in program:
-                funcName, func = decl.children
-                funcName = funcName[1][0][0]
-                inTypes = ", ".join(f"{a[1][1][1][0][0]}: {a[1][0][1][0][0]}" 
+                funcName, func = paint_varname(decl.children)
+                inTypes = ", ".join(f"{a[1][1][1][0][0]}: {paint_type(a[1][0])}" 
                         for a in func.children[0].children)
                 outType = paint_type(func.children[1])
                 body = f"fn {funcName}({inTypes}) -> {outType};".replace(" -> Void", "")
@@ -275,6 +289,24 @@ def paint_trait(name, tree, currentIndent=""):
 
     return out
 
+
+def paint_varname(vals):
+    *arg, value = vals
+    # no generics
+    if len(arg) == 1:
+        iden = arg[0]
+        varname = iden.children[0].value
+    # generics
+    else:
+        iden, gen = arg
+        varname = iden.children[0].value + "<"
+        gen = gen.children
+        for i, _ in enumerate(gen[::2]):
+            n = gen[i*2][1][0][0]
+            v = paint_type(gen[i*2+1])
+            varname += f"{n}: {v}, "
+        varname = varname[:-2] + ">"
+    return varname, value
 
 #%%
 def paint_program(instructions, currentIndent=""):
@@ -299,6 +331,9 @@ def paint_program(instructions, currentIndent=""):
         if name == "ExternCrate":
             crate = extra[0].children[0].value
             out = paintLineOn(out, f"extern crate {crate};", "")
+        if name == "Mod":
+            crate = extra[0].children[0].value
+            out = paintLineOn(out, f"mod {crate};", "")
 
         if name == "If":
             expr, block = extra
@@ -325,8 +360,7 @@ def paint_program(instructions, currentIndent=""):
             out = paintLineOn(out, f"let {mods}{' ' if mods!='' else ''}{varname}: {typeText} = {varvalue};", currentIndent)
 
         if name == "AutoDecl":
-            iden, value = extra
-            varname = iden.children[0].value
+            varname, value = paint_varname(extra)
             if value.value == "Function": # declare a function
                 functext = paint_function(varname, value, currentIndent)
                 out += currentIndent + functext

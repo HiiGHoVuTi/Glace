@@ -1,6 +1,7 @@
 
 import sys
-sys.path.append("..")
+import os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/..")
 from common.parselex import parse, lex
 from rust.paint import paint_total
 

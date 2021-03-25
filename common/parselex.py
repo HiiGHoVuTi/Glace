@@ -89,7 +89,11 @@ def parse(text):
     generic << (identifier + Literal("{").suppress() +\
         delimitedList(typeNotation) + Literal("}").suppress()).setParseAction(minipack("Generic"))
 
-    autoDeclaration = identifier + Literal(":=").suppress() + expression
+    varGeneric = (Literal("{").suppress() + delimitedList((identifier + \
+        Literal(":").suppress() + identifier)) + Literal("}").suppress())\
+        .setParseAction(minipack("VarGeneric"))
+
+    autoDeclaration = identifier + Optional(varGeneric) + Literal(":=").suppress() + expression
     autoDeclaration.setParseAction(minipack("AutoDecl"))
 
     typedDeclaration << typeNotation + Literal(":").suppress() + identifier
@@ -167,11 +171,13 @@ def parse(text):
 
     externCrate = Literal("extern").suppress() + Literal("crate").suppress() + identifier
     externCrate.setParseAction(minipack("ExternCrate"))
+    mod = Literal("mod").suppress() + identifier
+    mod.setParseAction(minipack("Mod"))
     useStatement = Literal("use").suppress() + ZeroOrMore(
         identifier + Literal("::").suppress()
     ) + (identifier ^ (Literal("{").suppress() + delimitedList(identifier).setParseAction(minipack("ImPack")) + Literal("}").suppress()) ^ Literal("*").setParseAction(lambda x: Node("*", [])))
     useStatement.setParseAction(minipack("Use"))
-    topLevel = useStatement ^ externCrate
+    topLevel = useStatement ^ externCrate ^ mod
 
     line = (declaration ^ expression ^ controlStatement ^ controlFlow ^ topLevel) + Literal(";").suppress()
     Program << OneOrMore(line) ^ empty
