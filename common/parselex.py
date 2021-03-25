@@ -79,7 +79,7 @@ def parse(text):
 
     # expressionAtom << functionExpr
     generic = Forward()
-    typeNotation = infixNotation(identifier ^ generic, [
+    typeNotation = infixNotation(identifier ^ generic ^ fixedArray, [
         (oneOf(["->"]), 2, opAssoc.LEFT),
         (oneOf(["*"]), 2, opAssoc.LEFT),
         (oneOf(["|"]), 2, opAssoc.LEFT),

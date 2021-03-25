@@ -18,7 +18,6 @@ def paint_type(typeName):
         return f"{base}<{', '.join(args)}>"
 
     # handle combos
-    # TODO
     if typeName.value == "TypeExpr":
         op, left, right = typeName.children
         left, right = paint_type(left), paint_type(right)
@@ -26,6 +25,11 @@ def paint_type(typeName):
         left, right = (left, right) if "mut" in left else (right, left)
         if op == "*" :
             return left + " " + right
+
+    if typeName.value == "FixedArray":
+        type, count = typeName.children
+        type = paint_type(type)
+        return f"[{type} ; {count[1][0][0]}]"
 
     if typeName.value == "ID":
         name = typeName.children[0].value
