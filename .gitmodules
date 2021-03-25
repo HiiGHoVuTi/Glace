@@ -1,0 +1,3 @@
+[submodule "examples/hellocalc"]
+	path = examples/hellocalc
+	url = https://github.com/HiiGHoVuTi/glacecalc.git

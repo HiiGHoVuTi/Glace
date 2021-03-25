@@ -57,6 +57,7 @@ def parse(text):
 
     expression = infixNotation(expressionAtom, [
         (oneOf(["'", ".", "::"]), 2, opAssoc.LEFT),
+        (oneOf(["as"]), 2, opAssoc.LEFT),
         (oneOf([".."]), 2, opAssoc.LEFT),
         (oneOf(["*", "/", "//"]), 2, opAssoc.LEFT),
         (oneOf(["+", "-"]), 2, opAssoc.LEFT),
