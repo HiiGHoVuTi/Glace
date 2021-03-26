@@ -1,5 +1,5 @@
 
-# Glace
+![image](images/glace.svg)
 
 Glace is a multipurpose language transpiled to Rust. It takes from functional languages and tries to have a straightforward approach to logic in general.
 
