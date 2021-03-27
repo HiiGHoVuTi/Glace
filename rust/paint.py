@@ -75,28 +75,6 @@ def paint_expression(expr, currentIndent=""):
     if expr.value == "BinOp":
         # TODO handle Glace-specific ops
         op, left, right = expr.children
-        """
-        # Single Access
-        if right.value == "TypedDecl" and op.value == "'":
-            left = paint_expression(left, currentIndent)
-            vartype, varname = right.children
-            vartype = paint_type(vartype)
-            return f'{left}.get("{varname[1][0][0]}").unwrap().downcast_ref::<{vartype}>().unwrap()'
-        # Multiple access
-        if right.value == "BinOp" and op.value == "'":
-            out = paint_expression(left, currentIndent)
-            while right.value == "BinOp":
-                op, left, right = right.children
-                if op.value != "'":
-                    raise NotImplementedError(f"Binary Operation ({op.value}) on Object get")
-                vartype, varname = left.children
-                vartype = paint_type(vartype)
-                out += f'.get("{varname[1][0][0]}").unwrap().downcast_ref::<{vartype}>().unwrap()'
-            vartype, varname = right.children
-            vartype = paint_type(vartype)    
-            out += f'.get("{varname[1][0][0]}").unwrap().downcast_ref::<{vartype}>().unwrap()'
-            return out
-        """
         left, right = paint_expression(left, currentIndent), paint_expression(right, currentIndent)
         if op.value == "=":
             left = f"let {left}"
@@ -131,7 +109,7 @@ def paint_expression(expr, currentIndent=""):
             if call.value == "ObjGet":
                 vartype, pName = call.children[0].children
                 vartype = paint_type(vartype)
-                out += f'.get("{pName[1][0][0]}").unwrap().downcast_ref::<{vartype}>()'
+                out += f'.get("{pName[1][0][0]}").unwrap().downcast_ref::<{vartype}>().unwrap()'
             if call.value == "ObjGet?":
                 vartype, pName = call.children[0].children
                 vartype = paint_type(vartype)
@@ -205,13 +183,13 @@ def paint_function(name, tree, currentIndent=""):
                     argName, type = argument[1][1][1][0][0], paint_type(argument.children[0])
                     argsText += f"{argName}: {type}, "
                 else:
-                    argsText += f"obj{i}: {paint_type(Node('ID', [Node('Object', [])]))}, "
+                    argsText += f"obj{i}: &{paint_type(Node('ID', [Node('Object', [])]))}, "
                     for decl in argument.children:
                         vname = decl.children[1].children[0].value
                         bodyText += currentIndent+"\t" + f"let {vname} = " + paint_expression(Node("ComplexCall", [
                             Node("ID", [Node(f"obj{i}", [])]),
-                            Node("ObjGet?", [decl])
-                        ]), currentIndent+"\t") + ";\n" + currentIndent
+                            Node("ObjGet" + ("?" if decl.value[-1] == "?" else ""), [decl])
+                        ]), currentIndent+"\t") + ";\n"
 
             argsText = argsText[:-2]
         retType, retValue = body.children
@@ -404,7 +382,7 @@ def paint_program(instructions, currentIndent=""):
                     vname = decl.children[1].children[0].value
                     decl = f"let {vname} = " + paint_expression(Node("ComplexCall", [
                         Node("ID", [Node(obj, [])]),
-                        Node("ObjGet?", [decl])
+                        Node("ObjGet" + ("?" if decl.value[-1] == "?" else ""), [decl])
                     ]), currentIndent) + ";"
                     out = paintLineOn(out, decl, currentIndent)
             elif value.value == "Function": # declare a function

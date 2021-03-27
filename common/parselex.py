@@ -147,7 +147,8 @@ def parse(text):
 
     controlFlow = ifStatement ^ forStatement ^ whileStatement
 
-    destr << Literal("{").suppress() + delimitedList(typedDeclaration ^ destr) + Literal("}").suppress()
+    QMTD = (typedDeclaration + Literal("?").suppress()).setParseAction(lambda x: Node("TypedDecl?", x[0].children))
+    destr << Literal("{").suppress() + delimitedList(typedDeclaration ^ destr ^ QMTD) + Literal("}").suppress()
     destr.setParseAction(minipack("ObjDestr"))
 
     argument = delimitedList(typedDeclaration ^ literal ^ identifier ^ destr)
