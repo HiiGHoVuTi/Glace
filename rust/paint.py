@@ -75,6 +75,7 @@ def paint_expression(expr, currentIndent=""):
     if expr.value == "BinOp":
         # TODO handle Glace-specific ops
         op, left, right = expr.children
+        """
         # Single Access
         if right.value == "TypedDecl" and op.value == "'":
             left = paint_expression(left, currentIndent)
@@ -95,6 +96,7 @@ def paint_expression(expr, currentIndent=""):
             vartype = paint_type(vartype)    
             out += f'.get("{varname[1][0][0]}").unwrap().downcast_ref::<{vartype}>().unwrap()'
             return out
+        """
         left, right = paint_expression(left, currentIndent), paint_expression(right, currentIndent)
         if op.value == "=":
             left = f"let {left}"
@@ -126,6 +128,23 @@ def paint_expression(expr, currentIndent=""):
                     ", ".join(kwarg.children[0][1][0][0] + ": " + \
                         str(paint_expression(kwarg.children[1], currentIndent))
                         for kwarg in call.children) + " }"
+            if call.value == "ObjGet":
+                vartype, pName = call.children[0].children
+                vartype = paint_type(vartype)
+                out += f'.get("{pName[1][0][0]}").unwrap().downcast_ref::<{vartype}>()'
+            if call.value == "ObjGet?":
+                vartype, pName = call.children[0].children
+                vartype = paint_type(vartype)
+                out = "{" + ("\n" + currentIndent + "\t").join(
+f"""
+let mut out: Option<&{vartype}> = None;
+let entry = ({out}).get("{pName[1][0][0]}");
+if let Some(pointer) = entry {{
+    out = pointer.downcast_ref::<{vartype}>();
+}}
+out
+""".splitlines()
+                ) + "\n" + currentIndent + "}"
             if call.value == "Dcol":
                 out += "::" + call[1][0][1][0][0]
             if call.value == "Dot":
@@ -178,21 +197,30 @@ def paint_function(name, tree, currentIndent=""):
     # Normal function
     if body.value == "FunctionBody":
         argsText = ""
+        bodyText = ""
         if argument.children[0].value != "None":
             argsText = ""
-            for argument in argument.children:
+            for i, argument in enumerate(argument.children):
                 if argument.value == "TypedDecl":
                     argName, type = argument[1][1][1][0][0], paint_type(argument.children[0])
                     argsText += f"{argName}: {type}, "
+                else:
+                    argsText += f"obj{i}: {paint_type(Node('ID', [Node('Object', [])]))}, "
+                    for decl in argument.children:
+                        vname = decl.children[1].children[0].value
+                        bodyText += currentIndent+"\t" + f"let {vname} = " + paint_expression(Node("ComplexCall", [
+                            Node("ID", [Node(f"obj{i}", [])]),
+                            Node("ObjGet?", [decl])
+                        ]), currentIndent+"\t") + ";\n" + currentIndent
+
             argsText = argsText[:-2]
         retType, retValue = body.children
         outputType = paint_type(retType)
 
-        bodyText = ""
         if retValue.value == "Block":
-            bodyText = paint_program(retValue.children, currentIndent+"\t")
+            bodyText += paint_program(retValue.children, currentIndent+"\t")
         else:
-            bodyText = currentIndent + "\t" + str(paint_expression(retValue, currentIndent)) + "\n"
+            bodyText += currentIndent + "\t" + str(paint_expression(retValue, currentIndent)) + "\n"
 
         outputText = f" -> {outputType}" if outputType != "Void" else ""
 
@@ -212,13 +240,6 @@ def paint_function(name, tree, currentIndent=""):
                     argsText += f"{argName}: {type}, "
                 else:
                     argsText += argument.children[0][0] + ", "
-            """if argument.children[0][1][0].value != "ID":
-                argsText = argument.children[0][1][0].value
-            else:
-                argName = argument.children[0][1][1][1][0][0]
-                type    = paint_type(argument.children[0][1][0])
-                argsText = f"{argName} : {type}"
-            """
             argsText = argsText[:-2]
         bodyText = compl = ""
         if body.value == "Block":
@@ -377,7 +398,16 @@ def paint_program(instructions, currentIndent=""):
 
         if name == "AutoDecl":
             varname, value = paint_varname(extra)
-            if value.value == "Function": # declare a function
+            if varname == "TypedDecl":
+                obj = paint_expression(value)
+                for decl in extra[0].children:
+                    vname = decl.children[1].children[0].value
+                    decl = f"let {vname} = " + paint_expression(Node("ComplexCall", [
+                        Node("ID", [Node(obj, [])]),
+                        Node("ObjGet?", [decl])
+                    ]), currentIndent) + ";"
+                    out = paintLineOn(out, decl, currentIndent)
+            elif value.value == "Function": # declare a function
                 functext = paint_function(varname, value, currentIndent)
                 out += currentIndent + functext
             elif value.value == "MacroCall":

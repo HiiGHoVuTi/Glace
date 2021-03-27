@@ -56,7 +56,7 @@ def parse(text):
 
 
     expression = infixNotation(expressionAtom, [
-        (oneOf(["'", ".", "::"]), 2, opAssoc.LEFT),
+        (oneOf([".", "::"]), 2, opAssoc.LEFT),
         (oneOf(["as"]), 2, opAssoc.LEFT),
         (oneOf([".."]), 2, opAssoc.LEFT),
         (oneOf(["*", "/", "//"]), 2, opAssoc.LEFT),
@@ -94,7 +94,9 @@ def parse(text):
         Literal(":").suppress() + identifier)) + Literal("}").suppress())\
         .setParseAction(minipack("VarGeneric"))
 
-    autoDeclaration = identifier + Optional(varGeneric) + Literal(":=").suppress() + expression
+    destr = Forward()
+
+    autoDeclaration = (identifier ^ destr) + Optional(varGeneric) + Literal(":=").suppress() + expression
     autoDeclaration.setParseAction(minipack("AutoDecl"))
 
     typedDeclaration << typeNotation + Literal(":").suppress() + identifier
@@ -145,7 +147,10 @@ def parse(text):
 
     controlFlow = ifStatement ^ forStatement ^ whileStatement
 
-    argument = delimitedList(typedDeclaration ^ literal ^ identifier)
+    destr << Literal("{").suppress() + delimitedList(typedDeclaration ^ destr) + Literal("}").suppress()
+    destr.setParseAction(minipack("ObjDestr"))
+
+    argument = delimitedList(typedDeclaration ^ literal ^ identifier ^ destr)
     argument.setParseAction(minipack("Argument"))
     funcBody = typeNotation + Literal(":").suppress() + (expression ^ codeBlock)
     funcBody.setParseAction(minipack("FunctionBody"))
@@ -160,7 +165,9 @@ def parse(text):
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol")) ^\
         (Literal("{").suppress() + delimitedList((identifier + Literal(":").suppress() + expression
             ).setParseAction(minipack("Kwarg"))) + Literal("}").suppress()).setParseAction(minipack("Spawn")) ^\
-        (Literal("[").suppress() + Optional(delimitedList(expression)) + Literal("]").suppress()).setParseAction(minipack("Aidx"))
+        (Literal("[").suppress() + Optional(delimitedList(expression)) + Literal("]").suppress()).setParseAction(minipack("Aidx")) ^\
+        (Literal("'").suppress() + Literal("(").suppress() + typedDeclaration + Literal(")").suppress()).setParseAction(minipack("ObjGet")) ^\
+        (Literal("?").suppress() + Literal("(").suppress() + typedDeclaration + Literal(")").suppress()).setParseAction(minipack("ObjGet?")) 
     )
     complexCall.setParseAction(minipack("ComplexCall"))
     functionCall << (simpleCall ^ complexCall)
