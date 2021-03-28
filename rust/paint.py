@@ -15,6 +15,8 @@ def paint_type(typeName):
         base, args = paint_type(base), [paint_type(arg) for arg in args]
         if base == "Ref":
             return f"&{args[0]}"
+        if base == "MutRef":
+            return f"&mut {args[0]}"
         return f"{base}<{', '.join(args)}>"
 
     # handle combos
@@ -58,6 +60,10 @@ def paint_call(name, args):
         return f"Box::new({argText})"
     if name == "Ref":
         return f"&({argText})"
+    if name == "Mut":
+        return f"mut ({argText})"
+    if name == "MutRef":
+        return f"&mut ({argText})"
     if name == "Unbox":
         return f"*({argText})"
     return f"{name}({argText})"
@@ -354,6 +360,16 @@ def paint_program(instructions, currentIndent=""):
             expr, block = extra
             expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
             out = paintLineOn(out, f"if {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
+        if name == "IfElse":
+            first, *rest = extra
+            expr, block = paint_expression(first[1][0], currentIndent), paint_program(first[1][1].children, currentIndent+"\t")
+            out = paintLineOn(out, f"if {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
+            for elseif in rest[:-1]:
+                expr, block = paint_expression(elseif[1][0], currentIndent), paint_program(elseif[1][1].children, currentIndent+"\t")
+                out = paintLineOn(out, f"else if {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
+            block = paint_program(rest[-1].children)
+            out = paintLineOn(out, f"else" + "{\n" + block + currentIndent +  "}", currentIndent)
+
         if name == "For":
             expr, block = extra
             expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")

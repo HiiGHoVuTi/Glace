@@ -140,12 +140,14 @@ def parse(text):
 
     ifStatement = Literal("if").suppress() + expression + codeBlock
     ifStatement.setParseAction(minipack("If"))
+    ifStructure = ifStatement + ZeroOrMore(Literal("else").suppress() + ifStatement) + Literal("else").suppress() + codeBlock
+    ifStructure.setParseAction(minipack("IfElse"))
     forStatement = Literal("for").suppress() + expression + codeBlock
     forStatement.setParseAction(minipack("For"))
     whileStatement = Literal("while").suppress() + expression + codeBlock
     whileStatement.setParseAction(minipack("while"))
 
-    controlFlow = ifStatement ^ forStatement ^ whileStatement
+    controlFlow = ifStatement ^ forStatement ^ whileStatement ^ ifStructure
 
     QMTD = (typedDeclaration + Literal("?").suppress()).setParseAction(lambda x: Node("TypedDecl?", x[0].children))
     destr << Literal("{").suppress() + delimitedList(typedDeclaration ^ destr ^ QMTD) + Literal("}").suppress()
