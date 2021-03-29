@@ -47,12 +47,13 @@ def parse(text):
     typedDeclaration = Forward()
     vector = Forward()
     array = Forward()
+    tuple = Forward()
     fixedArray = Forward()
     codeBlock = Forward()
     macro = Forward()
     expressionAtom = (literal ^ identifier ^ functionExpr ^ \
         functionCall ^ object ^ typedDeclaration ^ codeBlock ^ \
-        vector ^ array ^ fixedArray ^ macro)
+        vector ^ array ^ tuple ^ fixedArray ^ macro)
 
 
     expression = infixNotation(expressionAtom, [
@@ -126,6 +127,9 @@ def parse(text):
     array << Literal("[").suppress() + delimitedList(expression) + Literal("]").suppress()
     array.setParseAction(minipack("Array"))
 
+    tuple << Literal("(").suppress() + delimitedList(expression) + Literal(")").suppress()
+    tuple.setParseAction(minipack("Tuple"))
+
     fixedArray << Literal("[").suppress() + typeNotation + Literal(";").suppress() + expression + Literal("]").suppress()
     fixedArray.setParseAction(minipack("FixedArray"))
 
@@ -166,6 +170,7 @@ def parse(text):
         (Literal("(").suppress() + Optional(delimitedList(expression)) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
         (Literal(".").suppress() + identifier).setParseAction(minipack("Dot")) ^\
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol")) ^\
+        (Literal("::").suppress() + Literal("{").suppress() + typeNotation + Literal("}").suppress()).setParseAction(minipack("DGen")) ^\
         (Literal("{").suppress() + delimitedList((identifier + Literal(":").suppress() + expression
             ).setParseAction(minipack("Kwarg"))) + Literal("}").suppress()).setParseAction(minipack("Spawn")) ^\
         (Literal("[").suppress() + Optional(delimitedList(expression)) + Literal("]").suppress()).setParseAction(minipack("Aidx")) ^\

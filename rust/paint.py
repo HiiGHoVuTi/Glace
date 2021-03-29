@@ -84,7 +84,7 @@ def paint_expression(expr, currentIndent=""):
         left, right = paint_expression(left, currentIndent), paint_expression(right, currentIndent)
         if op.value == "=":
             left = f"let {left}"
-        return f"{left} {op.value} {right}"
+        return f"({left} {op.value} {right})"
     if expr.value == "Call":
         if len(expr.children) > 1:
             iden, *arg = expr.children
@@ -129,6 +129,8 @@ if let Some(pointer) = entry {{
 out
 """.splitlines()
                 ) + "\n" + currentIndent + "}"
+            if call.value == "DGen":
+                out += "::<" + paint_type(call[1][0]) + ">"
             if call.value == "Dcol":
                 out += "::" + call[1][0][1][0][0]
             if call.value == "Dot":
@@ -168,6 +170,11 @@ out
         return "[" + \
             ", ".join(str(paint_expression(e, currentIndent)) for e in expr.children) + \
         "]"
+
+    if expr.value == "Tuple":
+        return "(" + \
+            ", ".join(str(paint_expression(e, currentIndent)) for e in expr.children) + \
+        ")"
     
     if expr.value == "FixedArray":
         type, count = expr.children
@@ -367,7 +374,7 @@ def paint_program(instructions, currentIndent=""):
             for elseif in rest[:-1]:
                 expr, block = paint_expression(elseif[1][0], currentIndent), paint_program(elseif[1][1].children, currentIndent+"\t")
                 out = paintLineOn(out, f"else if {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
-            block = paint_program(rest[-1].children)
+            block = paint_program(rest[-1].children, currentIndent)
             out = paintLineOn(out, f"else" + "{\n" + block + currentIndent +  "}", currentIndent)
 
         if name == "For":
@@ -388,7 +395,7 @@ def paint_program(instructions, currentIndent=""):
             if "mut" in typeText:
                 mods = "mut"
                 typeText = typeText.replace("mut ", "")
-            out = paintLineOn(out, f"let {mods}{' ' if mods!='' else ''}{varname}: {typeText} = {varvalue};", currentIndent)
+            out = paintLineOn(out, f"let {mods}{' ' if mods!='' else ''}{varname}: {typeText} = {varvalue};".replace(": mut = ", " = "), currentIndent)
 
         if name == "AutoDecl":
             varname, value = paint_varname(extra)
