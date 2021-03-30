@@ -44,3 +44,25 @@ out
 
 
 # SHADING
+make_shading = lambda res, currentIndent: \
+("\n" + currentIndent).join(("""
+use std::fs;
+let shader_contents = fs::read_to_string(""" + res["shader_path"] + """).unwrap();
+
+let program = glium::program::ComputeShader::from_source(&display, &shader_contents).unwrap();
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+struct Data {
+""" + "\t" + (',\n' + "\t").join(f'{n}: {v}' for n, v in res["buffers"]) + """
+}
+
+implement_uniform_block!(Data, """ + ', '.join(n for n, v in res["buffers"] if n[0] != "_") + """);
+
+let mut """ + res["bufferName"] + """: glium::uniforms::UniformBuffer<Data> =
+            glium::uniforms::UniformBuffer::empty(&display).unwrap();
+
+let """ + res["exec"] + """ = |buf| program.execute(uniform! { MyBlock: buf }, """ + res["workgroup_count"][1:-1] + """);
+
+""").splitlines())
+

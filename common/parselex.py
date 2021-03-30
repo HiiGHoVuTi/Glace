@@ -110,7 +110,9 @@ def parse(text):
             Literal("=").suppress() + expression
     typedAndValuedDeclaration.setParseAction(minipack("TVDecl"))
 
-    reassignment = (identifier + ZeroOrMore(Literal(".").suppress() + identifier)).setParseAction(minipack("CID")) +\
+    cid = (identifier + ZeroOrMore(Literal(".").suppress() + identifier)).setParseAction(minipack("CID"))
+    reassignment = (cid ^\
+            (identifier + Literal("(").suppress() + cid + Literal(")").suppress()).setParseAction(minipack("CAID"))) +\
         Literal("<-").suppress() + expression
     reassignment.setParseAction(minipack("Reassign"))
 

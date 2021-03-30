@@ -2,7 +2,7 @@
 import sys
 sys.path.append("..")
 from common.utils import Node
-from rust.long_macros import object_none_checker, supermacro
+from rust.long_macros import *
 
 #%%
 def paintLineOn(buff, text, indent):
@@ -32,7 +32,7 @@ def paint_type(typeName):
     if typeName.value == "FixedArray":
         type, count = typeName.children
         type = paint_type(type)
-        return f"[{type} ; {count[1][0][0]}]"
+        return f"[{type} ; {paint_expression(count)}]"
 
     if typeName.value == "ID":
         name = typeName.children[0].value
@@ -312,6 +312,28 @@ def paint_trait(name, tree, currentIndent=""):
     return out
 
 
+def paint_shader(sections, currentIndent=""):
+    info = { "buffers": [] }
+    for section in sections:
+        id, *rest = section.children
+        if id[1][0][0] == "details":
+            for decl in rest:
+                name, val = decl[1][0][1][0][0], decl[1][1]
+                info[name] = paint_expression(val, currentIndent)
+        elif id[1][0][0] == "commands":
+            for decl in rest:
+                name, val = decl[1][0][1][0][0], decl[1][1]
+                info[name] = paint_expression(val, currentIndent)
+        else:
+            info["bufferName"] = id[1][0][0]
+            for decl in rest:
+                name, val = decl[1][0][1][0][0], decl[1][1]
+                val = paint_type(val)
+                info["buffers"].append((name, val))
+    return make_shading(info, currentIndent)
+
+
+
 def paint_varname(vals):
     *arg, value = vals
     # no generics
@@ -336,6 +358,10 @@ def paint_program(instructions, currentIndent=""):
     out = ""
     for instr in instructions:
         name, extra = instr
+
+        if name == "Block":
+            block = "{\n" + paint_program(extra, currentIndent + "\t") + currentIndent + "};"
+            out = paintLineOn(out, block, currentIndent)
 
         if name == "Use":
             o = ""
@@ -373,7 +399,7 @@ def paint_program(instructions, currentIndent=""):
 
         if name == "For":
             expr, block = extra
-            expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
+            expr, block = paint_expression(expr, currentIndent)[1:-1], paint_program(block.children, currentIndent+"\t")
             out = paintLineOn(out, f"for {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
         if name == "While":
             expr, block = extra
@@ -390,11 +416,14 @@ def paint_program(instructions, currentIndent=""):
             varname = iden.children[0].value
             typeText = paint_type(vartype)
             varvalue = paint_expression(value, currentIndent)
-            mods = ""
+            mods = "let"
             if "mut" in typeText:
-                mods = "mut"
+                mods = "let mut"
                 typeText = typeText.replace("mut ", "")
-            out = paintLineOn(out, f"let {mods}{' ' if mods!='' else ''}{varname}: {typeText} = {varvalue};".replace(": mut = ", " = "), currentIndent)
+            if "Const" in typeText:
+                mods = "const"
+                typeText = typeText.replace("Const", "")
+            out = paintLineOn(out, f"{mods} {varname}: {typeText} = {varvalue};".replace(": mut = ", " = ").replace(": Const = ", " = "), currentIndent)
 
         if name == "AutoDecl":
             varname, value = paint_varname(extra)
@@ -422,9 +451,17 @@ def paint_program(instructions, currentIndent=""):
                 out = paintLineOn(out, f"let {varname} = {varvalue};", currentIndent)
         if name == "Reassign":
             iden, value = extra
-            varname = iden.children[0].children[0].value
-            for extra in iden.children[1:]:
-                varname += "." + extra.children[0].value
+            if iden.value == "CAID":
+                varname = ""
+                if iden.children[0].children[0].value == "Unbox":
+                    varname += "*"
+                varname += iden.children[1].children[0].children[0].value
+                for extra in iden.children[1].children[1:]:
+                    varname += "." + extra.children[0].value
+            else:
+                varname = iden.children[0].children[0].value
+                for extra in iden.children[1:]:
+                    varname += "." + extra.children[0].value
             varvalue = paint_expression(value)
             out = paintLineOn(out, f"{varname} = {varvalue};", currentIndent)
 
@@ -450,6 +487,12 @@ def paint_program(instructions, currentIndent=""):
             expr = extra[0]
             exprText = paint_expression(expr, currentIndent)
             out = paintLineOn(out, f"return {exprText};", currentIndent)
+
+        if name == "MacroCall":
+            if extra[0][1][0][0] == "MakeShader":
+                sections = extra[1:]
+                text = paint_shader(sections, currentIndent)
+                out = paintLineOn(out, text, currentIndent)
 
         if name == "ID":
             name = extra[0].value
