@@ -149,9 +149,11 @@ def parse(text):
     forStatement = Literal("for").suppress() + expression + codeBlock
     forStatement.setParseAction(minipack("For"))
     whileStatement = Literal("while").suppress() + expression + codeBlock
-    whileStatement.setParseAction(minipack("while"))
+    whileStatement.setParseAction(minipack("While"))
+    unsafeStatement = Literal("unsafe").suppress() + codeBlock
+    unsafeStatement.setParseAction(minipack("Unsafe"))
 
-    controlFlow = ifStatement ^ forStatement ^ whileStatement ^ ifStructure
+    controlFlow = ifStatement ^ forStatement ^ whileStatement ^ ifStructure ^ unsafeStatement
 
     QMTD = (typedDeclaration + Literal("?").suppress()).setParseAction(lambda x: Node("TypedDecl?", x[0].children))
     destr << Literal("{").suppress() + delimitedList(typedDeclaration ^ destr ^ QMTD) + Literal("}").suppress()
@@ -166,7 +168,7 @@ def parse(text):
 
     simpleCall = identifier + Literal("(").suppress() + Optional(delimitedList(expression)) + Literal(")").suppress()
     simpleCall.setParseAction(minipack("Call"))
-    complexCall = (identifier ^ literal) + OneOrMore(
+    complexCall = (identifier ^ Word(alphanums + "_" + "!").setParseAction(lambda x: Node("ID", pack(x))) ^ literal) + OneOrMore(
         (Literal("(").suppress() + Optional(delimitedList(expression)) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
         (Literal(".").suppress() + identifier).setParseAction(minipack("Dot")) ^\
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol")) ^\

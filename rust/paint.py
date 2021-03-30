@@ -2,6 +2,7 @@
 import sys
 sys.path.append("..")
 from common.utils import Node
+from rust.long_macros import object_none_checker, supermacro
 
 #%%
 def paintLineOn(buff, text, indent):
@@ -119,15 +120,8 @@ def paint_expression(expr, currentIndent=""):
             if call.value == "ObjGet?":
                 vartype, pName = call.children[0].children
                 vartype = paint_type(vartype)
-                out = "{" + ("\n" + currentIndent + "\t").join(
-f"""
-let mut out: Option<&{vartype}> = None;
-let entry = ({out}).get("{pName[1][0][0]}");
-if let Some(pointer) = entry {{
-    out = pointer.downcast_ref::<{vartype}>();
-}}
-out
-""".splitlines()
+                out = "{" + object_none_checker(
+                    vartype, pName, out, currentIndent
                 ) + "\n" + currentIndent + "}"
             if call.value == "DGen":
                 out += "::<" + paint_type(call[1][0]) + ">"
@@ -381,11 +375,16 @@ def paint_program(instructions, currentIndent=""):
             expr, block = extra
             expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
             out = paintLineOn(out, f"for {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
-        if name == "while":
+        if name == "While":
             expr, block = extra
             expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
             out = paintLineOn(out, f"while {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
         
+        if name == "Unsafe":
+            block = extra[0]
+            block = paint_program(block.children, currentIndent+"\t")
+            out = paintLineOn(out, "unsafe {\n" + block + currentIndent + "}", currentIndent)
+
         if name == "TVDecl":
             vartype, iden, value = extra
             varname = iden.children[0].value
@@ -451,6 +450,11 @@ def paint_program(instructions, currentIndent=""):
             expr = extra[0]
             exprText = paint_expression(expr, currentIndent)
             out = paintLineOn(out, f"return {exprText};", currentIndent)
+
+        if name == "ID":
+            name = extra[0].value
+            out = paintLineOn(out, supermacro(name, currentIndent), currentIndent)
+
 
         if currentIndent == "":
             out += "\n"
