@@ -28,6 +28,11 @@ let context = unsafe {
 let display = glium::backend::glutin::headless::Headless::new(context).unwrap();
 """.splitlines())[2:]
 
+    if name == "pass":
+        return ""
+
+    return "UNKNOWN MACRO: " + name
+
 
 # OBJECTS
 
@@ -49,20 +54,20 @@ make_shading = lambda res, currentIndent: \
 use std::fs;
 let shader_contents = fs::read_to_string(""" + res["shader_path"] + """).unwrap();
 
-let program = glium::program::ComputeShader::from_source(&display, &shader_contents).unwrap();
+let program""" + res["id"] + """ = glium::program::ComputeShader::from_source(&display, &shader_contents).unwrap();
 
 #[repr(C)]
 #[derive(Clone, Copy)]
-struct Data {
+struct Data""" + res["id"] + """ {
 """ + "\t" + (',\n' + "\t").join(f'{n}: {v}' for n, v in res["buffers"]) + """
 }
 
-implement_uniform_block!(Data, """ + ', '.join(n for n, v in res["buffers"] if n[0] != "_") + """);
+implement_uniform_block!(Data""" + res["id"] + """, """ + ', '.join(n for n, v in res["buffers"] if n[0] != "_") + """);
 
-let mut """ + res["bufferName"] + """: glium::uniforms::UniformBuffer<Data> =
+let mut """ + res["bufferName"] + """: glium::uniforms::UniformBuffer<Data""" + res["id"] + """> =
             glium::uniforms::UniformBuffer::empty(&display).unwrap();
 
-let """ + res["exec"] + """ = |buf| program.execute(uniform! { MyBlock: buf }, """ + res["workgroup_count"][1:-1] + """);
+let """ + res["exec"] + """ = |buf| program""" + res["id"] + """.execute(uniform! { MyBlock: buf }, """ + res["workgroup_count"][1:-1] + """);
 
 """).splitlines())
 

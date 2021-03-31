@@ -93,7 +93,7 @@ def paint_expression(expr, currentIndent=""):
                 name = iden[1][0][0]
                 return paint_call(name, arg)
         else:
-            return paint_call(expr.children[0][1][0][0], Node("ID", [Node("", [])]))
+            return paint_call(expr.children[0][1][0][0], [Node("ID", [Node("", [])])])
     if expr.value == "ComplexCall":
         out = ""
         iden, *extra = expr.children
@@ -311,9 +311,9 @@ def paint_trait(name, tree, currentIndent=""):
 
     return out
 
-
+import random
 def paint_shader(sections, currentIndent=""):
-    info = { "buffers": [] }
+    info = { "buffers": [], "id": str(random.getrandbits(16)) }
     for section in sections:
         id, *rest = section.children
         if id[1][0][0] == "details":
