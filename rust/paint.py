@@ -97,7 +97,7 @@ def paint_expression(expr, currentIndent=""):
     if expr.value == "ComplexCall":
         out = ""
         iden, *extra = expr.children
-        out += iden[1][0][0]
+        out += str(iden[1][0][0])
         for call in extra:
             if call.value == "Parg":
                 out += "(" + \
@@ -134,7 +134,7 @@ def paint_expression(expr, currentIndent=""):
     # Reworking this
     if expr.value == "Object":
         assigns = expr.children
-        out = "{\n" + currentIndent + "\t" + "let mut object: HashMap<&str, Box<dyn Any + 'static>> = HashMap::new();" + "\n"
+        out = "{\n" + currentIndent + "\t" + "let mut object: HashMap<&str, Box<dyn Any>> = HashMap::new();" + "\n"
         for assign in assigns:
             name, value = assign.children
             if name.value == "ID":
@@ -385,14 +385,14 @@ def paint_program(instructions, currentIndent=""):
 
         if name == "If":
             expr, block = extra
-            expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
+            expr, block = paint_expression(expr, currentIndent)[1:-1], paint_program(block.children, currentIndent+"\t")
             out = paintLineOn(out, f"if {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
         if name == "IfElse":
             first, *rest = extra
-            expr, block = paint_expression(first[1][0], currentIndent), paint_program(first[1][1].children, currentIndent+"\t")
+            expr, block = paint_expression(first[1][0], currentIndent)[1:-1], paint_program(first[1][1].children, currentIndent+"\t")
             out = paintLineOn(out, f"if {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
             for elseif in rest[:-1]:
-                expr, block = paint_expression(elseif[1][0], currentIndent), paint_program(elseif[1][1].children, currentIndent+"\t")
+                expr, block = paint_expression(elseif[1][0], currentIndent)[1:-1], paint_program(elseif[1][1].children, currentIndent+"\t")
                 out = paintLineOn(out, f"else if {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
             block = paint_program(rest[-1].children, currentIndent)
             out = paintLineOn(out, f"else" + "{\n" + block + currentIndent +  "}", currentIndent)
@@ -403,7 +403,7 @@ def paint_program(instructions, currentIndent=""):
             out = paintLineOn(out, f"for {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
         if name == "While":
             expr, block = extra
-            expr, block = paint_expression(expr, currentIndent), paint_program(block.children, currentIndent+"\t")
+            expr, block = paint_expression(expr, currentIndent)[1:-1], paint_program(block.children, currentIndent+"\t")
             out = paintLineOn(out, f"while {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
         
         if name == "Unsafe":

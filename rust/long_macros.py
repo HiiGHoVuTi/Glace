@@ -5,6 +5,8 @@ def supermacro(name, currentIndent):
     if name == "__IMPORT_OPENGL_SHADING":
         return \
 """
+use std::fs;
+
 #[macro_use]
 extern crate glium;
 
@@ -51,7 +53,6 @@ out
 # SHADING
 make_shading = lambda res, currentIndent: \
 ("\n" + currentIndent).join(("""
-use std::fs;
 let shader_contents = fs::read_to_string(""" + res["shader_path"] + """).unwrap();
 
 let program""" + res["id"] + """ = glium::program::ComputeShader::from_source(&display, &shader_contents).unwrap();
@@ -67,7 +68,7 @@ implement_uniform_block!(Data""" + res["id"] + """, """ + ', '.join(n for n, v i
 let mut """ + res["bufferName"] + """: glium::uniforms::UniformBuffer<Data""" + res["id"] + """> =
             glium::uniforms::UniformBuffer::empty(&display).unwrap();
 
-let """ + res["exec"] + """ = |buf| program""" + res["id"] + """.execute(uniform! { MyBlock: buf }, """ + res["workgroup_count"][1:-1] + """);
+let """ + res["exec"] + """ = |buf: glium::uniforms::UniformBuffer<Data""" + res["id"] + """>| program""" + res["id"] + """.execute(uniform! { MainBuffer: &*buf }, """ + res["workgroup_count"][1:-1] + """);
 
 """).splitlines())
 
