@@ -8,3 +8,4 @@ helloworld
 test.bash
 */__pycache__/
 /__pycache__/
+*/target/

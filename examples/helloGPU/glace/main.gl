@@ -11,7 +11,10 @@ main := None => Void: {
 
     # -- declares a float buffer
     [buffers]
-        Float: buffer;
+        buffer := {
+            type <- f32,
+            dims <- [ 1 << 5, 1 << 5 ]
+        };
 
     # -- creates a kernel from the function "add" from the compute shader
     # -- it will add our buffer to 10

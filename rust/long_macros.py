@@ -38,8 +38,12 @@ let pro_que""" + info["id"] + """ = ProQue::builder()
 \t.dims(""" + info["dims"] + """)
 \t.build().unwrap();
 """ + ("\n" + currentIndent).join([f"""
-let {name} = pro_que""" + info["id"] + f""".create_buffer::<{type}>().unwrap();
-""" for type, name in info["buffers"].items()]) + """
+let {name} = ocl::Buffer::<{type}>::builder()
+\t.queue(pro_que{info['id']}.queue().clone())
+\t.flags(ocl::flags::MEM_READ_WRITE)
+\t.len({dims})
+\t.build().unwrap();
+""" for name, (type, dims) in info["buffers"].items()]) + """
 """ + ("\n").join([f"""
 let {name} = pro_que""" + info["id"] + f""".kernel_builder({traits["name"]})
 """ + ("\n").join(["\t" + f""".arg(&{arg})""" for arg in traits["args"]]) + """

@@ -327,7 +327,13 @@ def paint_shader_builder(sections, currentIndent=""):
             if name == "data":
                 info[subname] = paint_expression(decl.children[1], currentIndent)
             if name == "buffers":
-                info["buffers"][paint_type(decl.children[0])] = decl.children[1].children[0].value
+                key = decl.children[0].children[0].value
+                info["buffers"][key] = [None] * 2
+                for assign in decl.children[1].children:
+                    if assign.children[0].children[0].value == "dims":
+                        info["buffers"][key][1] = paint_expression(assign.children[1], currentIndent)
+                    if assign.children[0].children[0].value == "type":
+                        info["buffers"][key][0] = paint_type(assign.children[1]) 
             if name == "kernels":
                 info["kernels"][subname] = {}
                 for assign in decl.children[1].children:
