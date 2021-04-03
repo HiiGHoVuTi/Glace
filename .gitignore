@@ -1,8 +1,8 @@
 *.swp
 tests.py
 main
-main.rs
-main.gl
+mainn.rs
+mainn.gl
 helloworld.rs
 helloworld
 test.bash

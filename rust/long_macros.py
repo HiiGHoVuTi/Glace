@@ -48,7 +48,9 @@ let {name} = pro_que""" + info["id"] + f""".kernel_builder({traits["name"]})
 """).splitlines())
 
 make_shading_call = lambda info, currentIndent: ("\n" + currentIndent).join(("""
-unsafe { """ + info["kernel"] + """.enq().unwrap(); }
-""" + info["buffer"] + """.read(&mut """ + info["value"] + """).enq().unwrap();
+""" + ("").join([f"""
+{b}.write(&{v}).enq().unwrap();""" for b, v in info["pairs"]]) + """
 
-""").splitlines())
+unsafe { """ + info["kernel"] + """.enq().unwrap(); }
+""" +  ("").join([f"""
+{b}.read(&mut {v}).enq().unwrap();""" for b, v in info["pairs"]])).splitlines())

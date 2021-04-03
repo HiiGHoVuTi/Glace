@@ -251,7 +251,10 @@ def paint_struct(name, tree, currentIndent=""):
 
     for section in sections:
         secName, *program = section.children
-        if secName[1][0].value == "data":
+        if secName[1][0].value in ["data", "shader_data"]:
+            if secName[1][0].value == "shader_data":
+                out += currentIndent + "#[repr(C)]\n"
+                out += currentIndent + "#[derive(Clone, Copy, Debug, PartialEq, Default)]\n"
             pub = ""
             if len(name.split("pub_")) > 1:
                 pub = "pub "
@@ -266,6 +269,9 @@ def paint_struct(name, tree, currentIndent=""):
                     fname = fname.split("pub_")[-1]
                 out += "\t" + f"{pub}{fname}: {type}," + "\n" + currentIndent
             out += "}\n" + currentIndent
+            if secName[1][0].value == "shader_data":
+                out += currentIndent + f"unsafe impl ocl::OclPrm for {name} {{}}" + "\n"
+                
         if secName[1][0].value == "methods":
             out += f"impl {name}" + " {\n" + currentIndent
             for decl in program:
@@ -331,13 +337,19 @@ def paint_shader_builder(sections, currentIndent=""):
     return make_shading_kernel(info, currentIndent)
 
 def paint_shader_call(sections, currentIndent=""):
-    info = {}
+    info = { "pairs": []}
     for sec in sections:
         name = sec.children[0].children[0].value
         if name == "data":
             for decl in sec.children[1:]:
                 subname = decl.children[0].children[0].value
-                info[subname] = paint_expression(decl.children[1], currentIndent)
+                if subname == "pairs":
+                    for arr in decl.children[1].children:
+                        info[subname].append([
+                            paint_expression(child)
+                        for child in arr.children])
+                else:
+                    info[subname] = paint_expression(decl.children[1], currentIndent)
     return make_shading_call(info, currentIndent)
 
 def paint_varname(vals):
