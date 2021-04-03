@@ -1,0 +1,40 @@
+__IMPORT_OCL_SHADING;
+
+main := None => Void: {
+
+    ShaderBuilder! {
+
+    # -- creates a shader from main.comp, that takes in a 32x32 buffer
+    [data]
+        source := "shaders/main.comp";
+        dims := [1 << 5, 1 << 5];
+
+    # -- declares a float buffer
+    [buffers]
+        Float: buffer;
+
+    # -- creates a kernel from the function "add" from the compute shader
+    # -- it will add our buffer to 10
+    [kernels]
+        add_kernel := {
+            name <- "add",
+            args <- [ buffer, 10.0 as f32 ]
+        };
+    };
+
+    # -- instantiate a 32*32 buffer full of zeros
+    range := 0 .. (32 * 32);
+    Mut * Vec{f32}: vec = range.map(x => x as f32).collect();
+    for v in vec.iter_mut() {
+        Unbox(v) <- 0.0 as f32;
+    };
+
+    # -- finally calls the shader
+    ShaderCall! {
+    [data]
+        kernel := add_kernel;
+        buffer := buffer;
+        value := vec;
+    };
+    print(vec[0]); # -- prints 10.0
+};
