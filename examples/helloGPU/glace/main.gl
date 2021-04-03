@@ -33,8 +33,9 @@ main := None => Void: {
     ShaderCall! {
     [data]
         kernel := add_kernel;
-        buffer := buffer;
-        value := vec;
+        pairs := [
+            [ buffer, vec ]
+        ];
     };
     print(vec[0]); # -- prints 10.0
 };
