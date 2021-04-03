@@ -2,34 +2,13 @@
 
 # SUPERMACROS
 def supermacro(name, currentIndent):
-    if name == "__IMPORT_OPENGL_SHADING":
+    if name == "__IMPORT_OCL_SHADING":
         return \
 """
 use std::fs;
-
-#[macro_use]
-extern crate glium;
-
-#[allow(unused_imports)]
-use glium::glutin;
-use crate::glutin::dpi::PhysicalSize;
+extern crate ocl;
+use ocl::ProQue;
 """
-    if name == "__INIT_SHADERS":
-        return ("\n" + currentIndent).join(
-"""
-let event_loop = glium::glutin::event_loop::EventLoop::new();
-let cb = glutin::ContextBuilder::new();
-let size = PhysicalSize {
-    width: 0,
-    height: 0,
-};
-let context = cb.build_headless(&event_loop, size).unwrap();
-let context = unsafe {
-    context.treat_as_current()
-};
-let display = glium::backend::glutin::headless::Headless::new(context).unwrap();
-""".splitlines())[2:]
-
     if name == "pass":
         return ""
 
@@ -51,24 +30,25 @@ out
 
 
 # SHADING
-make_shading = lambda res, currentIndent: \
-("\n" + currentIndent).join(("""
-let shader_contents = fs::read_to_string(""" + res["shader_path"] + """).unwrap();
+make_shading_kernel = lambda info, currentIndent: ("\n" + currentIndent).join(("""
+let shader_contents = fs::read_to_string(""" + info["source"] + """).unwrap();
 
-let program""" + res["id"] + """ = glium::program::ComputeShader::from_source(&display, &shader_contents).unwrap();
-
-#[repr(C)]
-#[derive(Clone, Copy)]
-struct Data""" + res["id"] + """ {
-""" + "\t" + (',\n' + "\t").join(f'{n}: {v}' for n, v in res["buffers"]) + """
-}
-
-implement_uniform_block!(Data""" + res["id"] + """, """ + ', '.join(n for n, v in res["buffers"] if n[0] != "_") + """);
-
-let mut """ + res["bufferName"] + """: glium::uniforms::UniformBuffer<Data""" + res["id"] + """> =
-            glium::uniforms::UniformBuffer::empty(&display).unwrap();
-
-let """ + res["exec"] + """ = |buf: glium::uniforms::UniformBuffer<Data""" + res["id"] + """>| program""" + res["id"] + """.execute(uniform! { MainBuffer: &*buf }, """ + res["workgroup_count"][1:-1] + """);
-
+let pro_que""" + info["id"] + """ = ProQue::builder()
+\t.src(shader_contents)
+\t.dims(""" + info["dims"] + """)
+\t.build().unwrap();
+""" + ("\n" + currentIndent).join([f"""
+let {name} = pro_que""" + info["id"] + f""".create_buffer::<{type}>().unwrap();
+""" for type, name in info["buffers"].items()]) + """
+""" + ("\n").join([f"""
+let {name} = pro_que""" + info["id"] + f""".kernel_builder({traits["name"]})
+""" + ("\n").join(["\t" + f""".arg(&{arg})""" for arg in traits["args"]]) + """
+\t.build().unwrap();
+""" for name, traits in info["kernels"].items()]) + """
 """).splitlines())
 
+make_shading_call = lambda info, currentIndent: ("\n" + currentIndent).join(("""
+unsafe { """ + info["kernel"] + """.enq().unwrap(); }
+""" + info["buffer"] + """.read(&mut """ + info["value"] + """).enq().unwrap();
+
+""").splitlines())

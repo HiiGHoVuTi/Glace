@@ -312,27 +312,33 @@ def paint_trait(name, tree, currentIndent=""):
     return out
 
 import random
-def paint_shader(sections, currentIndent=""):
-    info = { "buffers": [], "id": str(random.getrandbits(16)) }
-    for section in sections:
-        id, *rest = section.children
-        if id[1][0][0] == "details":
-            for decl in rest:
-                name, val = decl[1][0][1][0][0], decl[1][1]
-                info[name] = paint_expression(val, currentIndent)
-        elif id[1][0][0] == "commands":
-            for decl in rest:
-                name, val = decl[1][0][1][0][0], decl[1][1]
-                info[name] = paint_expression(val, currentIndent)
-        else:
-            info["bufferName"] = id[1][0][0]
-            for decl in rest:
-                name, val = decl[1][0][1][0][0], decl[1][1]
-                val = paint_type(val)
-                info["buffers"].append((name, val))
-    return make_shading(info, currentIndent)
+def paint_shader_builder(sections, currentIndent=""):
+    info = { "buffers": {}, "kernels": {}, "id": "".join(random.choice("0123456789") for _ in range(4)) }
+    for sec in sections:
+        name = sec.children[0].children[0].value
+        for decl in sec.children[1:]:
+            subname = decl.children[0].children[0].value
+            if name == "data":
+                info[subname] = paint_expression(decl.children[1], currentIndent)
+            if name == "buffers":
+                info["buffers"][paint_type(decl.children[0])] = decl.children[1].children[0].value
+            if name == "kernels":
+                info["kernels"][subname] = {}
+                for assign in decl.children[1].children:
+                    key = assign.children[0].children[0].value
+                    info["kernels"][subname][key] = paint_expression(assign.children[1])
+                info["kernels"][subname]["args"] = info["kernels"][subname]["args"][1:-1].split(", ")
+    return make_shading_kernel(info, currentIndent)
 
-
+def paint_shader_call(sections, currentIndent=""):
+    info = {}
+    for sec in sections:
+        name = sec.children[0].children[0].value
+        if name == "data":
+            for decl in sec.children[1:]:
+                subname = decl.children[0].children[0].value
+                info[subname] = paint_expression(decl.children[1], currentIndent)
+    return make_shading_call(info, currentIndent)
 
 def paint_varname(vals):
     *arg, value = vals
@@ -489,10 +495,14 @@ def paint_program(instructions, currentIndent=""):
             out = paintLineOn(out, f"return {exprText};", currentIndent)
 
         if name == "MacroCall":
-            if extra[0][1][0][0] == "MakeShader":
+            if extra[0][1][0][0] == "ShaderBuilder":
                 sections = extra[1:]
-                text = paint_shader(sections, currentIndent)
+                text = paint_shader_builder(sections, currentIndent)
                 out = paintLineOn(out, text, currentIndent)
+            if extra[0][1][0][0] == "ShaderCall":
+                sections = extra[1:]
+                text = paint_shader_call(sections, currentIndent)
+                out = paintLineOn(out, text, currentIndent) 
 
         if name == "ID":
             name = extra[0].value
