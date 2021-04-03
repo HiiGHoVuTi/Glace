@@ -60,6 +60,7 @@ def parse(text):
         (oneOf([".", "::"]), 2, opAssoc.LEFT),
         (oneOf(["as"]), 2, opAssoc.LEFT),
         (oneOf([".."]), 2, opAssoc.LEFT),
+        (oneOf(["<<", ">>", "&", "|"]), 2, opAssoc.LEFT),
         (oneOf(["*", "/", "//"]), 2, opAssoc.LEFT),
         (oneOf(["+", "-"]), 2, opAssoc.LEFT),
         (oneOf(["%"]), 2, opAssoc.LEFT),
