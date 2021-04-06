@@ -11,6 +11,8 @@ use ocl::ProQue;
 """
     if name == "pass":
         return ""
+    if name in ["break", "continue"]:
+        return name + ";"
 
     return "UNKNOWN MACRO: " + name
 

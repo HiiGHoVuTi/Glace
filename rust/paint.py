@@ -475,18 +475,8 @@ def paint_program(instructions, currentIndent=""):
                 out = paintLineOn(out, f"let {varname} = {varvalue};", currentIndent)
         if name == "Reassign":
             iden, value = extra
-            if iden.value == "CAID":
-                varname = ""
-                if iden.children[0].children[0].value == "Unbox":
-                    varname += "*"
-                varname += iden.children[1].children[0].children[0].value
-                for extra in iden.children[1].children[1:]:
-                    varname += "." + extra.children[0].value
-            else:
-                varname = iden.children[0].children[0].value
-                for extra in iden.children[1:]:
-                    varname += "." + extra.children[0].value
-            varvalue = paint_expression(value)
+            varname = paint_expression(iden, currentIndent+"\t")
+            varvalue = paint_expression(value, currentIndent+"\t")
             out = paintLineOn(out, f"{varname} = {varvalue};", currentIndent)
 
 

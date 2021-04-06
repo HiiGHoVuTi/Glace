@@ -111,10 +111,8 @@ def parse(text):
             Literal("=").suppress() + expression
     typedAndValuedDeclaration.setParseAction(minipack("TVDecl"))
 
-    cid = (identifier + ZeroOrMore(Literal(".").suppress() + identifier)).setParseAction(minipack("CID"))
-    reassignment = (cid ^\
-            (identifier + Literal("(").suppress() + cid + Literal(")").suppress()).setParseAction(minipack("CAID"))) +\
-        Literal("<-").suppress() + expression
+    complexCall = Forward()
+    reassignment = complexCall + Literal("<-").suppress() + expression
     reassignment.setParseAction(minipack("Reassign"))
 
     declaration = autoDeclaration ^ typedAndValuedDeclaration ^ typedDeclaration ^ valuedDeclaration ^ reassignment
@@ -171,7 +169,7 @@ def parse(text):
 
     simpleCall = identifier + Literal("(").suppress() + Optional(delimitedList(expression)) + Literal(")").suppress()
     simpleCall.setParseAction(minipack("Call"))
-    complexCall = (identifier ^ Word(alphanums + "_" + "!").setParseAction(lambda x: Node("ID", pack(x))) ^ literal) + OneOrMore(
+    complexCall << (identifier ^ Word(alphanums + "_" + "!").setParseAction(lambda x: Node("ID", pack(x))) ^ literal) + OneOrMore(
         (Literal("(").suppress() + Optional(delimitedList(expression)) + Literal(")").suppress()).setParseAction(minipack("Parg")) ^\
         (Literal(".").suppress() + identifier).setParseAction(minipack("Dot")) ^\
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol")) ^\
