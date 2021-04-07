@@ -12,6 +12,9 @@ def lex(raw):
     lexed = ""
     for line in raw.splitlines():
         if len(line.strip()) == 0: continue
+        if "#[" in line: 
+            lexed += "\n" + line
+            continue
         lexed += "\n" + line.split("#")[0]
     return lexed
 
@@ -51,22 +54,24 @@ def parse(text):
     fixedArray = Forward()
     codeBlock = Forward()
     macro = Forward()
+    rawMacro = Forward()
     expressionAtom = (literal ^ identifier ^ functionExpr ^ \
         functionCall ^ object ^ typedDeclaration ^ codeBlock ^ \
-        vector ^ array ^ tuple ^ fixedArray ^ macro)
+        vector ^ array ^ tuple ^ fixedArray ^ macro ^ rawMacro)
 
 
     expression = infixNotation(expressionAtom, [
         (oneOf([".", "::"]), 2, opAssoc.LEFT),
-        (oneOf(["as"]), 2, opAssoc.LEFT),
-        (oneOf([".."]), 2, opAssoc.LEFT),
-        (oneOf(["<<", ">>", "&", "|"]), 2, opAssoc.LEFT),
-        (oneOf(["*", "/", "//"]), 2, opAssoc.LEFT),
-        (oneOf(["+", "-"]), 2, opAssoc.LEFT),
-        (oneOf(["%"]), 2, opAssoc.LEFT),
-        (oneOf(["==", "!=", "<", ">", "<=", ">="]), 2, opAssoc.LEFT),
-        (oneOf(["in", "="]), 2, opAssoc.LEFT),
-        (oneOf(["&&", "||"]), 2, opAssoc.LEFT),
+        (oneOf(["as"]), 2, opAssoc.RIGHT),
+        (oneOf([".."]), 2, opAssoc.RIGHT),
+        (oneOf(["<<", ">>", "&", "|"]), 2, opAssoc.RIGHT),
+        (oneOf(["*", "/", "//"]), 2, opAssoc.RIGHT),
+        (oneOf(["+", "-"]), 2, opAssoc.RIGHT),
+        (oneOf(["%"]), 2, opAssoc.RIGHT),
+        (oneOf(["==", "!=", "<", ">", "<=", ">="]), 2, opAssoc.RIGHT),
+        (oneOf(["in", "="]), 2, opAssoc.RIGHT),
+        (oneOf(["&&", "||"]), 2, opAssoc.RIGHT),
+        (oneOf(["@"]), 2, opAssoc.RIGHT),
     ])
     def binOP_parse(name, arr):
         def force(a):
@@ -142,6 +147,9 @@ def parse(text):
         Program).setParseAction(minipack("MacroSection"))
     ) + Literal("}").suppress()
     macro.setParseAction(minipack("MacroCall"))
+
+    rawMacro << identifier + Literal("!").suppress() + QuotedString("\\", multiline=True).setParseAction(pack)
+    rawMacro.setParseAction(minipack("RawMacroCall"))
 
     ifStatement = Literal("if").suppress() + expression + codeBlock
     ifStatement.setParseAction(minipack("If"))

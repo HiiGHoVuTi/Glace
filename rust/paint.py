@@ -83,9 +83,12 @@ def paint_expression(expr, currentIndent=""):
         # TODO handle Glace-specific ops
         op, left, right = expr.children
         left, right = paint_expression(left, currentIndent), paint_expression(right, currentIndent)
-        if op.value == "=":
+        op = op.value
+        if op == "=":
             left = f"let {left}"
-        return f"({left} {op.value} {right})"
+        if op == "@":
+            op = ""
+        return f"({left} {op} {right})"
     if expr.value == "Call":
         if len(expr.children) > 1:
             iden, *arg = expr.children
@@ -173,6 +176,13 @@ def paint_expression(expr, currentIndent=""):
     if expr.value == "FixedArray":
         type, count = expr.children
         return "[" + paint_type(type) + " ; " + str(paint_expression(count)) + "]"
+
+    if expr.value == "RawMacroCall":
+        name = expr.children[0][1][0][0]
+        body = expr.children[1].value
+        if name == "rust":
+            return body
+        return f"{name}! {body}"
 
     return "exprNotImplemented"
 
@@ -511,6 +521,14 @@ def paint_program(instructions, currentIndent=""):
                 sections = extra[1:]
                 text = paint_shader_call(sections, currentIndent)
                 out = paintLineOn(out, text, currentIndent) 
+
+        if name == "RawMacroCall":
+            name = extra[0][1][0][0]
+            body = extra[1].value
+            if name == "rust":
+                out = paintLineOn(out, body, currentIndent)
+            else:
+                out = paintLineOn(out, f"{name}! {body};", currentIndent)
 
         if name == "ID":
             name = extra[0].value
