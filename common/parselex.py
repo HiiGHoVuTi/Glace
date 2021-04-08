@@ -12,7 +12,7 @@ def lex(raw):
     lexed = ""
     for line in raw.splitlines():
         if len(line.strip()) == 0: continue
-        if "#[" in line: 
+        if "#[" in line or "#![": 
             lexed += "\n" + line
             continue
         lexed += "\n" + line.split("#")[0]
@@ -87,7 +87,7 @@ def parse(text):
 
     # expressionAtom << functionExpr
     generic = Forward()
-    typeNotation = infixNotation(identifier ^ generic ^ fixedArray, [
+    typeNotation = infixNotation(identifier ^ generic ^ fixedArray ^ rawMacro, [
         (oneOf(["->"]), 2, opAssoc.LEFT),
         (oneOf(["*"]), 2, opAssoc.LEFT),
         (oneOf(["|"]), 2, opAssoc.LEFT),
@@ -117,7 +117,7 @@ def parse(text):
     typedAndValuedDeclaration.setParseAction(minipack("TVDecl"))
 
     complexCall = Forward()
-    reassignment = complexCall + Literal("<-").suppress() + expression
+    reassignment = (identifier ^ complexCall) + Literal("<-").suppress() + expression
     reassignment.setParseAction(minipack("Reassign"))
 
     declaration = autoDeclaration ^ typedAndValuedDeclaration ^ typedDeclaration ^ valuedDeclaration ^ reassignment

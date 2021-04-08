@@ -51,6 +51,14 @@ def paint_type(typeName):
         if name in ["Obj", "Object"]:
             return "HashMap<&str, Box<dyn Any + 'static>>"
         return name
+    if typeName.value == "RawMacroCall":
+        extra = typeName.children
+        macroName = extra[0].children[0].value
+        macroContents = extra[1].value
+        if macroName == "rust":
+            return macroContents
+        else:
+            return f"{macroName}! {macroContents}"
     return "typeNotImplemented"
 
 def paint_call(name, args):
@@ -87,7 +95,7 @@ def paint_expression(expr, currentIndent=""):
         if op == "=":
             left = f"let {left}"
         if op == "@":
-            op = ""
+            return f"{left} {right}"
         return f"({left} {op} {right})"
     if expr.value == "Call":
         if len(expr.children) > 1:
