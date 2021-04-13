@@ -12,10 +12,7 @@ def lex(raw):
     lexed = ""
     for line in raw.splitlines():
         if len(line.strip()) == 0: continue
-        if "#[" in line or "#![": 
-            lexed += "\n" + line
-            continue
-        lexed += "\n" + line.split("#")[0]
+        lexed += "\n" + line.split("#//")[0]
     return lexed
 
 #%%
@@ -55,9 +52,10 @@ def parse(text):
     codeBlock = Forward()
     macro = Forward()
     rawMacro = Forward()
+    controlFlow = Forward()
     expressionAtom = (literal ^ identifier ^ functionExpr ^ \
         functionCall ^ object ^ typedDeclaration ^ codeBlock ^ \
-        vector ^ array ^ tuple ^ fixedArray ^ macro ^ rawMacro)
+        vector ^ array ^ tuple ^ fixedArray ^ macro ^ rawMacro ^ controlFlow)
 
 
     expression = infixNotation(expressionAtom, [
@@ -87,15 +85,20 @@ def parse(text):
 
     # expressionAtom << functionExpr
     generic = Forward()
-    typeNotation = infixNotation(identifier ^ generic ^ fixedArray ^ rawMacro, [
-        (oneOf(["->"]), 2, opAssoc.LEFT),
+    typeCall = Forward()
+    typeNotation = infixNotation(identifier ^ generic ^ fixedArray ^ rawMacro ^ typeCall, [
+        (oneOf("::"), 2, opAssoc.LEFT),
         (oneOf(["*"]), 2, opAssoc.LEFT),
         (oneOf(["|"]), 2, opAssoc.LEFT),
+        (oneOf(["->"]), 2, opAssoc.LEFT),
     ])
     typeNotation.setParseAction(lambda x: binOP_parse("TypeExpr", x[0]))
 
     generic << (identifier + Literal("{").suppress() +\
         delimitedList(typeNotation) + Literal("}").suppress()).setParseAction(minipack("Generic"))
+
+    typeCall << (identifier + Literal("(").suppress() +\
+        typeNotation + Literal(")").suppress()).setParseAction(minipack("TypeCall"))
 
     varGeneric = (Literal("{").suppress() + delimitedList((identifier + \
         Literal(":").suppress() + identifier)) + Literal("}").suppress())\
@@ -159,10 +162,14 @@ def parse(text):
     forStatement.setParseAction(minipack("For"))
     whileStatement = Literal("while").suppress() + expression + codeBlock
     whileStatement.setParseAction(minipack("While"))
-    unsafeStatement = Literal("unsafe").suppress() + codeBlock
-    unsafeStatement.setParseAction(minipack("Unsafe"))
+    wordStatement = identifier + codeBlock
+    wordStatement.setParseAction(minipack("WordBlock"))
+    matchStatement = (Literal("match").suppress() + expression + Literal("{").suppress() + ZeroOrMore(
+        Literal("case").suppress() + typeNotation + expression
+    ) + Literal("}").suppress()
+    ).setParseAction(minipack("Match"))
 
-    controlFlow = ifStatement ^ forStatement ^ whileStatement ^ ifStructure ^ unsafeStatement
+    controlFlow << (ifStatement ^ forStatement ^ whileStatement ^ ifStructure ^ wordStatement ^ matchStatement)
 
     QMTD = (typedDeclaration + Literal("?").suppress()).setParseAction(lambda x: Node("TypedDecl?", x[0].children))
     destr << Literal("{").suppress() + delimitedList(typedDeclaration ^ destr ^ QMTD) + Literal("}").suppress()
@@ -182,8 +189,13 @@ def parse(text):
         (Literal(".").suppress() + identifier).setParseAction(minipack("Dot")) ^\
         (Literal("::").suppress() + identifier).setParseAction(minipack("Dcol")) ^\
         (Literal("::").suppress() + Literal("{").suppress() + typeNotation + Literal("}").suppress()).setParseAction(minipack("DGen")) ^\
-        (Literal("{").suppress() + delimitedList((identifier + Literal(":").suppress() + expression
-            ).setParseAction(minipack("Kwarg"))) + Literal("}").suppress()).setParseAction(minipack("Spawn")) ^\
+        (Literal("{").suppress() + delimitedList(
+            (identifier + Literal(":").suppress() + expression
+                ).setParseAction(minipack("Kwarg")) ^\
+            (Literal("..").suppress() + complexCall
+                ).setParseAction(minipack("Rest"))
+        ) + Literal("}").suppress()
+        ).setParseAction(minipack("Spawn")) ^\
         (Literal("[").suppress() + Optional(delimitedList(expression)) + Literal("]").suppress()).setParseAction(minipack("Aidx")) ^\
         (Literal("'").suppress() + Literal("(").suppress() + typedDeclaration + Literal(")").suppress()).setParseAction(minipack("ObjGet")) ^\
         (Literal("?").suppress() + Literal("(").suppress() + typedDeclaration + Literal(")").suppress()).setParseAction(minipack("ObjGet?")) 

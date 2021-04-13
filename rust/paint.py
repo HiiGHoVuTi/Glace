@@ -19,6 +19,12 @@ def paint_type(typeName):
         if base == "MutRef":
             return f"&mut {args[0]}"
         return f"{base}<{', '.join(args)}>"
+    if typeName.value == "TypeCall":
+        base, arg = typeName.children
+        base, arg = paint_type(base), paint_type(arg)
+
+        return f"{base}({arg})"
+
 
     # handle combos
     if typeName.value == "TypeExpr":
@@ -28,6 +34,8 @@ def paint_type(typeName):
         left, right = (left, right) if "mut" in left else (right, left)
         if op == "*" :
             return left + " " + right
+        if op == "::":
+            return right + "::" + left
 
     if typeName.value == "FixedArray":
         type, count = typeName.children
@@ -56,7 +64,7 @@ def paint_type(typeName):
         macroName = extra[0].children[0].value
         macroContents = extra[1].value
         if macroName == "rust":
-            return macroContents
+            return macroContents.strip()
         else:
             return f"{macroName}! {macroContents}"
     return "typeNotImplemented"
@@ -123,7 +131,9 @@ def paint_expression(expr, currentIndent=""):
                 out += "{ " + \
                     ", ".join(kwarg.children[0][1][0][0] + ": " + \
                         str(paint_expression(kwarg.children[1], currentIndent))
-                        for kwarg in call.children) + " }"
+                    if len(kwarg.children) > 1 else
+                        paint_expression(kwarg)
+                    for kwarg in call.children ) + " }"
             if call.value == "ObjGet":
                 vartype, pName = call.children[0].children
                 vartype = paint_type(vartype)
@@ -141,6 +151,9 @@ def paint_expression(expr, currentIndent=""):
             if call.value == "Dot":
                 out += "." + call[1][0][1][0][0]
         return out
+
+    if expr.value == "Rest":
+        return ".." + paint_expression(expr.children[0])
 
     # Reworking this
     if expr.value == "Object":
@@ -191,6 +204,18 @@ def paint_expression(expr, currentIndent=""):
         if name == "rust":
             return body
         return f"{name}! {body}"
+    
+    if expr.value == "Match":
+        extra = expr.children
+        test  = extra[0]
+        match_out = f"match {paint_expression(test)} {{\n"
+        conds = extra[1::2]
+        vals  = extra[2::2]
+        for cond, val in zip(conds, vals):
+            cond, val = paint_type(cond), paint_expression(val, currentIndent + "\t")
+            match_out = paintLineOn(match_out, f"{cond} => {val},", currentIndent + "\t")
+        match_out += "}"
+        return match_out
 
     return "exprNotImplemented"
 
@@ -206,6 +231,9 @@ def paint_function(name, tree, currentIndent=""):
             for i, argument in enumerate(argument.children):
                 if argument.value == "TypedDecl":
                     argName, type = argument[1][1][1][0][0], paint_type(argument.children[0])
+                    if "mut" in type:
+                        type = type.replace("mut ", "")
+                        argName = "mut " + argName
                     argsText += f"{argName}: {type}, "
                 else:
                     argsText += f"obj{i}: &{paint_type(Node('ID', [Node('Object', [])]))}, "
@@ -447,11 +475,16 @@ def paint_program(instructions, currentIndent=""):
             expr, block = extra
             expr, block = paint_expression(expr, currentIndent)[1:-1], paint_program(block.children, currentIndent+"\t")
             out = paintLineOn(out, f"while {expr} " + "{\n" + block + currentIndent +  "}", currentIndent)
-        
-        if name == "Unsafe":
-            block = extra[0]
+
+        if name == "Match":
+            match_out = paint_expression(instr, currentIndent)
+            out = paintLineOn(out, match_out + ";", currentIndent)
+
+        if name == "WordBlock":
+            name = paint_expression(extra[0])
+            block = extra[1]
             block = paint_program(block.children, currentIndent+"\t")
-            out = paintLineOn(out, "unsafe {\n" + block + currentIndent + "}", currentIndent)
+            out = paintLineOn(out, name + " {\n" + block + currentIndent + "}", currentIndent)
 
         if name == "TVDecl":
             vartype, iden, value = extra
@@ -549,11 +582,7 @@ def paint_program(instructions, currentIndent=""):
     return out
 
 def paint_total(instructions):
-    return """
-use std::collections::HashMap;
-use std::any::Any;
-
-""" + paint_program(instructions)
+    return paint_program(instructions)
 
 
 # %%

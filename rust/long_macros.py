@@ -9,6 +9,12 @@ use std::fs;
 extern crate ocl;
 use ocl::ProQue;
 """
+    if name == "__IMPORT_OBJECTS":
+        return \
+"""
+use std::collections::HashMap;
+use std::any::Any;
+"""
     if name == "pass":
         return ""
     if name in ["break", "continue"]:
