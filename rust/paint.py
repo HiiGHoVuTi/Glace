@@ -209,11 +209,15 @@ def paint_expression(expr, currentIndent=""):
         extra = expr.children
         test  = extra[0]
         match_out = f"match {paint_expression(test)} {{\n"
-        conds = extra[1::2]
-        vals  = extra[2::2]
-        for cond, val in zip(conds, vals):
+        conds = extra[1::3]
+        props = extra[2::3]
+        vals  = extra[3::3]
+        for cond, prop, val in zip(conds, props, vals):
             cond, val = paint_type(cond), paint_expression(val, currentIndent + "\t")
-            match_out = paintLineOn(match_out, f"{cond} => {val},", currentIndent + "\t")
+            prop = ", ".join(paint_expression(p) for p in prop.children)
+            if len(prop) > 0:
+                prop = " { " + prop + " }"
+            match_out = paintLineOn(match_out, f"{cond}{prop} => {val},", currentIndent + "\t")
         match_out += "}"
         return match_out
 
@@ -317,24 +321,35 @@ def paint_struct(name, tree, currentIndent=""):
             out += "}\n" + currentIndent
             if secName[1][0].value == "shader_data":
                 out += currentIndent + f"unsafe impl ocl::OclPrm for {name} {{}}" + "\n"
-                
+
         if secName[1][0].value == "methods":
             out += f"impl {name}" + " {\n" + currentIndent
             for decl in program:
                 funcName, func = paint_varname(decl.children)
                 body = paint_function(funcName, func, currentIndent + "\t")
-                out += "\t" + body.replace(f"self: {name}", "&self")\
-                    .replace(f"self: mut {name}", f"&mut self")
+                out += "\t" + body\
+                    .replace(f"self: mut {name}", f"&mut self")\
+                    .replace(f"self: {name}", "&self")\
+                    .replace("mut &self", "&mut self")\
+                    .replace(f"mut self: &{name}", "&mut self")
             out += "}\n" + currentIndent
         if secName.value == "Generic":
             if secName[1][0][1][0].value == "methods":
                 traitName = secName[1][1][1][0].value
                 out += f"impl {traitName} for {name}" + " {\n" + currentIndent
                 for decl in program:
-                    funcName, func = paint_varname(decl.children)
-                    body = paint_function(funcName, func, currentIndent + "\t")
-                    out += "\t" + body.replace(f"self: {name}", "&self")\
-                        .replace(f"self: mut {name}", "&mut self")
+                    if decl.value == "AutoDecl":
+                        funcName, func = paint_varname(decl.children)
+                        body = paint_function(funcName, func, currentIndent + "\t")
+                        out += "\t" + body\
+                            .replace(f"self: mut {name}", f"&mut self")\
+                            .replace(f"self: {name}", "&self")\
+                            .replace("mut &self", "&mut self")\
+                            .replace(f"mut self: &{name}", "&mut self")
+                    if decl.value == "TypedDecl":
+                        newType, typeExpr = decl.children
+                        newType, typeExpr = paint_type(newType), paint_type(typeExpr)
+                        out += "\t" + f"type {newType} = {typeExpr};" + "\n"
                 out += "}\n" + currentIndent
     return out
 

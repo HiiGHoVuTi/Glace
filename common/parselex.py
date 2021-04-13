@@ -61,7 +61,7 @@ def parse(text):
     expression = infixNotation(expressionAtom, [
         (oneOf([".", "::"]), 2, opAssoc.LEFT),
         (oneOf(["as"]), 2, opAssoc.RIGHT),
-        (oneOf([".."]), 2, opAssoc.RIGHT),
+        (oneOf(["..", "..="]), 2, opAssoc.RIGHT),
         (oneOf(["<<", ">>", "&", "|"]), 2, opAssoc.RIGHT),
         (oneOf(["*", "/", "//"]), 2, opAssoc.RIGHT),
         (oneOf(["+", "-"]), 2, opAssoc.RIGHT),
@@ -165,7 +165,9 @@ def parse(text):
     wordStatement = identifier + codeBlock
     wordStatement.setParseAction(minipack("WordBlock"))
     matchStatement = (Literal("match").suppress() + expression + Literal("{").suppress() + ZeroOrMore(
-        Literal("case").suppress() + typeNotation + expression
+        Literal("case").suppress() + typeNotation + Optional(
+            Literal("{<").suppress() + delimitedList(identifier) + Literal(">}").suppress()
+        ).setParseAction(minipack("Props")) + expression
     ) + Literal("}").suppress()
     ).setParseAction(minipack("Match"))
 
