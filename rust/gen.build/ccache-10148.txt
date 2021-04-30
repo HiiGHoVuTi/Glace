@@ -1,0 +1,603 @@
+[2021-04-08T19:02:06.695435 4000 ] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) base_dir = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) compiler = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) compression = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) compression_level = 6
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) cpp_extension = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) debug = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) depend_mode = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) direct_mode = true
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) disable = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) hard_link = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) hash_dir = true
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:06.695435 4000 ] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) max_files = 0
+[2021-04-08T19:02:06.695435 4000 ] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) path = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) prefix_command = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) read_only = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) read_only_direct = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) recache = false
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) sloppiness = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) stats = true
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) temporary_dir = 
+[2021-04-08T19:02:06.695435 4000 ] Config: (default) umask = 
+[2021-04-08T19:02:06.695435 4000 ] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o __helpers.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src __helpers.c
+[2021-04-08T19:02:06.695435 4000 ] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:06.695435 4000 ] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:06.696435 4000 ] Source file: __helpers.c
+[2021-04-08T19:02:06.696435 4000 ] Object file: __helpers.o
+[2021-04-08T19:02:06.696435 4000 ] Trying direct lookup
+[2021-04-08T19:02:06.696435 4000 ] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/4/c/a60d3d954ad3c698bfbb0484c2dd9e-42907.manifest
+[2021-04-08T19:02:06.712440 720  ] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:06.712440 720  ] Config: (default) base_dir = 
+[2021-04-08T19:02:06.712440 720  ] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:06.712440 720  ] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:06.712440 720  ] Config: (default) compiler = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:06.712440 720  ] Config: (default) compression = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) compression_level = 6
+[2021-04-08T19:02:06.712440 720  ] Config: (default) cpp_extension = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) debug = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) depend_mode = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) direct_mode = true
+[2021-04-08T19:02:06.712440 720  ] Config: (default) disable = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) hard_link = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) hash_dir = true
+[2021-04-08T19:02:06.712440 720  ] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:06.712440 720  ] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:06.712440 720  ] Config: (default) max_files = 0
+[2021-04-08T19:02:06.712440 720  ] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:06.712440 720  ] Config: (default) path = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) prefix_command = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) read_only = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) read_only_direct = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) recache = false
+[2021-04-08T19:02:06.712440 720  ] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:06.712440 720  ] Config: (default) sloppiness = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) stats = true
+[2021-04-08T19:02:06.712440 720  ] Config: (default) temporary_dir = 
+[2021-04-08T19:02:06.712440 720  ] Config: (default) umask = 
+[2021-04-08T19:02:06.713441 720  ] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o __constants.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src __constants.c
+[2021-04-08T19:02:06.713441 720  ] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:06.713441 720  ] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:06.713441 720  ] Source file: __constants.c
+[2021-04-08T19:02:06.713441 720  ] Object file: __constants.o
+[2021-04-08T19:02:06.713441 720  ] Trying direct lookup
+[2021-04-08T19:02:06.713441 720  ] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/4/8/86e41299cfdc2ef5b704d974717563-4640.manifest
+[2021-04-08T19:02:06.746437 4000 ] Got object file hash from manifest
+[2021-04-08T19:02:06.747441 4000 ] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/f/c824db2d00ba0e782a9dbefead3eeb-610984.o to __helpers.o (uncompressed)
+[2021-04-08T19:02:06.747441 4000 ] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/f/c824db2d00ba0e782a9dbefead3eeb-610984.o -> __helpers.o
+[2021-04-08T19:02:06.747441 4000 ] Succeeded getting cached result
+[2021-04-08T19:02:06.747441 4000 ] Result: cache hit (direct)
+[2021-04-08T19:02:06.748439 4000 ] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:06.748439 4000 ] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:06.749439 3960 ] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) base_dir = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) compiler = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) compression = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) compression_level = 6
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) cpp_extension = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) debug = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) depend_mode = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) direct_mode = true
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) disable = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) hard_link = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) hash_dir = true
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:06.749439 3960 ] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) max_files = 0
+[2021-04-08T19:02:06.749439 3960 ] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) path = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) prefix_command = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) read_only = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) read_only_direct = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) recache = false
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) sloppiness = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) stats = true
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) temporary_dir = 
+[2021-04-08T19:02:06.749439 3960 ] Config: (default) umask = 
+[2021-04-08T19:02:06.750439 3960 ] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o __loader.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src __loader.c
+[2021-04-08T19:02:06.750439 3960 ] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:06.750439 3960 ] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:06.750439 3960 ] Source file: __loader.c
+[2021-04-08T19:02:06.750439 3960 ] Object file: __loader.o
+[2021-04-08T19:02:06.750439 3960 ] Trying direct lookup
+[2021-04-08T19:02:06.750439 3960 ] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/d/9399d12936da1484d73847cb9746af-3173.manifest
+[2021-04-08T19:02:06.751437 3960 ] No such manifest file
+[2021-04-08T19:02:06.751437 3960 ] Did not find object file hash in manifest
+[2021-04-08T19:02:06.751437 3960 ] Running preprocessor
+[2021-04-08T19:02:06.768439 8524 ] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) base_dir = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) compiler = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) compression = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) compression_level = 6
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) cpp_extension = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) debug = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) depend_mode = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) direct_mode = true
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) disable = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) hard_link = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) hash_dir = true
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:06.768439 8524 ] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) max_files = 0
+[2021-04-08T19:02:06.768439 8524 ] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) path = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) prefix_command = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) read_only = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) read_only_direct = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) recache = false
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) sloppiness = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) stats = true
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) temporary_dir = 
+[2021-04-08T19:02:06.768439 8524 ] Config: (default) umask = 
+[2021-04-08T19:02:06.769442 8524 ] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o module.__main__.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src module.__main__.c
+[2021-04-08T19:02:06.769442 8524 ] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:06.769442 8524 ] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:06.769442 8524 ] Source file: module.__main__.c
+[2021-04-08T19:02:06.769442 8524 ] Object file: module.__main__.o
+[2021-04-08T19:02:06.769442 8524 ] Trying direct lookup
+[2021-04-08T19:02:06.770443 8524 ] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/d/a200af3217b956136dffcfc5fede65-114603.manifest
+[2021-04-08T19:02:06.770443 8524 ] No such manifest file
+[2021-04-08T19:02:06.770443 8524 ] Did not find object file hash in manifest
+[2021-04-08T19:02:06.770443 8524 ] Running preprocessor
+[2021-04-08T19:02:06.788439 720  ] Got object file hash from manifest
+[2021-04-08T19:02:06.788439 720  ] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/2/8/4af91b9a44d2d9cd6002f3f417b8e1-587007.o to __constants.o (uncompressed)
+[2021-04-08T19:02:06.789439 720  ] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/2/8/4af91b9a44d2d9cd6002f3f417b8e1-587007.o -> __constants.o
+[2021-04-08T19:02:06.789439 720  ] Succeeded getting cached result
+[2021-04-08T19:02:06.789439 720  ] Result: cache hit (direct)
+[2021-04-08T19:02:06.789439 720  ] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/2/stats.lock
+[2021-04-08T19:02:06.794442 720  ] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/2/stats.lock
+[2021-04-08T19:02:07.001441 10368] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:07.001441 10368] Config: (default) base_dir = 
+[2021-04-08T19:02:07.001441 10368] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:07.001441 10368] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:07.001441 10368] Config: (default) compiler = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:07.001441 10368] Config: (default) compression = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) compression_level = 6
+[2021-04-08T19:02:07.001441 10368] Config: (default) cpp_extension = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) debug = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) depend_mode = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) direct_mode = true
+[2021-04-08T19:02:07.001441 10368] Config: (default) disable = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) hard_link = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) hash_dir = true
+[2021-04-08T19:02:07.001441 10368] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:07.001441 10368] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:07.001441 10368] Config: (default) max_files = 0
+[2021-04-08T19:02:07.001441 10368] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:07.001441 10368] Config: (default) path = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) prefix_command = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) read_only = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) read_only_direct = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) recache = false
+[2021-04-08T19:02:07.001441 10368] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:07.001441 10368] Config: (default) sloppiness = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) stats = true
+[2021-04-08T19:02:07.001441 10368] Config: (default) temporary_dir = 
+[2021-04-08T19:02:07.001441 10368] Config: (default) umask = 
+[2021-04-08T19:02:07.001441 10368] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o module.glacec.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src module.glacec.c
+[2021-04-08T19:02:07.001441 10368] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:07.001441 10368] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:07.002441 10368] Source file: module.glacec.c
+[2021-04-08T19:02:07.002441 10368] Object file: module.glacec.o
+[2021-04-08T19:02:07.002441 10368] Trying direct lookup
+[2021-04-08T19:02:07.002441 10368] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/0/937f2f4d789557e157327b20f1feda-66706.manifest
+[2021-04-08T19:02:07.002441 10368] No such manifest file
+[2021-04-08T19:02:07.002441 10368] Did not find object file hash in manifest
+[2021-04-08T19:02:07.003441 10368] Running preprocessor
+[2021-04-08T19:02:07.079443 8036 ] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) base_dir = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) compiler = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) compression = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) compression_level = 6
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) cpp_extension = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) debug = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) depend_mode = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) direct_mode = true
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) disable = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) hard_link = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) hash_dir = true
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:07.079443 8036 ] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) max_files = 0
+[2021-04-08T19:02:07.079443 8036 ] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) path = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) prefix_command = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) read_only = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) read_only_direct = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) recache = false
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) sloppiness = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) stats = true
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) temporary_dir = 
+[2021-04-08T19:02:07.079443 8036 ] Config: (default) umask = 
+[2021-04-08T19:02:07.079443 8036 ] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o static_src\MainProgram.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src static_src\MainProgram.c
+[2021-04-08T19:02:07.079443 8036 ] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:07.079443 8036 ] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:07.080442 8036 ] Source file: static_src\MainProgram.c
+[2021-04-08T19:02:07.080442 8036 ] Object file: static_src\MainProgram.o
+[2021-04-08T19:02:07.080442 8036 ] Trying direct lookup
+[2021-04-08T19:02:07.080442 8036 ] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/6/3e8b63a55b36cb8b620d7e90feba7d-26162.manifest
+[2021-04-08T19:02:07.190439 3960 ] Got object file hash from preprocessor
+[2021-04-08T19:02:07.190439 3960 ] Object file C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/0/c6031c88d7085f760b1f8eb5325a25-415955.o not in cache
+[2021-04-08T19:02:07.190439 3960 ] Running real compiler
+[2021-04-08T19:02:07.203442 8036 ] Got object file hash from manifest
+[2021-04-08T19:02:07.204439 8036 ] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/7/d89ecc16e0503f215060c46814d417-4073665.o to static_src\MainProgram.o (uncompressed)
+[2021-04-08T19:02:07.204439 8036 ] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/7/d89ecc16e0503f215060c46814d417-4073665.o -> static_src\MainProgram.o
+[2021-04-08T19:02:07.205441 8036 ] Succeeded getting cached result
+[2021-04-08T19:02:07.205441 8036 ] Result: cache hit (direct)
+[2021-04-08T19:02:07.205441 8036 ] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:07.206440 8036 ] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:07.220444 8524 ] Got object file hash from preprocessor
+[2021-04-08T19:02:07.220444 8524 ] Object file C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/9/862299a59890cbd676d9114a38f1e6-688786.o not in cache
+[2021-04-08T19:02:07.220444 8524 ] Running real compiler
+[2021-04-08T19:02:07.265441 1036 ] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) base_dir = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) compiler = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) compression = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) compression_level = 6
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) cpp_extension = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) debug = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) depend_mode = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) direct_mode = true
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) disable = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) hard_link = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) hash_dir = true
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:07.265441 1036 ] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) max_files = 0
+[2021-04-08T19:02:07.265441 1036 ] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) path = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) prefix_command = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) read_only = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) read_only_direct = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) recache = false
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) sloppiness = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) stats = true
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) temporary_dir = 
+[2021-04-08T19:02:07.265441 1036 ] Config: (default) umask = 
+[2021-04-08T19:02:07.265441 1036 ] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o static_src\CompiledCellType.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src static_src\CompiledCellType.c
+[2021-04-08T19:02:07.266441 1036 ] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:07.266441 1036 ] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:07.266441 1036 ] Source file: static_src\CompiledCellType.c
+[2021-04-08T19:02:07.266441 1036 ] Object file: static_src\CompiledCellType.o
+[2021-04-08T19:02:07.266441 1036 ] Trying direct lookup
+[2021-04-08T19:02:07.266441 1036 ] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/4/55a6ada642935af03ccdc47abeb1ce-7912.manifest
+[2021-04-08T19:02:07.283439 10368] Got object file hash from preprocessor
+[2021-04-08T19:02:07.283439 10368] Object file C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/6/fa4a3309a28420d7aebf969321088a-639160.o not in cache
+[2021-04-08T19:02:07.283439 10368] Running real compiler
+[2021-04-08T19:02:07.323442 1036 ] Got object file hash from manifest
+[2021-04-08T19:02:07.323442 1036 ] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/b/d/731cafa87d1360a9aa9c68a5f566b3-590684.o to static_src\CompiledCellType.o (uncompressed)
+[2021-04-08T19:02:07.324440 1036 ] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/b/d/731cafa87d1360a9aa9c68a5f566b3-590684.o -> static_src\CompiledCellType.o
+[2021-04-08T19:02:07.324440 1036 ] Succeeded getting cached result
+[2021-04-08T19:02:07.324440 1036 ] Result: cache hit (direct)
+[2021-04-08T19:02:07.324440 1036 ] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/b/stats.lock
+[2021-04-08T19:02:07.325442 1036 ] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/b/stats.lock
+[2021-04-08T19:02:07.408443 11176] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:07.408443 11176] Config: (default) base_dir = 
+[2021-04-08T19:02:07.408443 11176] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:07.408443 11176] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:07.408443 11176] Config: (default) compiler = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:07.408443 11176] Config: (default) compression = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) compression_level = 6
+[2021-04-08T19:02:07.408443 11176] Config: (default) cpp_extension = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) debug = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) depend_mode = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) direct_mode = true
+[2021-04-08T19:02:07.408443 11176] Config: (default) disable = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) hard_link = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) hash_dir = true
+[2021-04-08T19:02:07.408443 11176] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:07.408443 11176] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:07.408443 11176] Config: (default) max_files = 0
+[2021-04-08T19:02:07.408443 11176] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:07.408443 11176] Config: (default) path = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) prefix_command = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) read_only = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) read_only_direct = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) recache = false
+[2021-04-08T19:02:07.408443 11176] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:07.408443 11176] Config: (default) sloppiness = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) stats = true
+[2021-04-08T19:02:07.408443 11176] Config: (default) temporary_dir = 
+[2021-04-08T19:02:07.408443 11176] Config: (default) umask = 
+[2021-04-08T19:02:07.409442 11176] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o static_src\CompiledFunctionType.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src static_src\CompiledFunctionType.c
+[2021-04-08T19:02:07.409442 11176] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:07.409442 11176] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:07.410444 11176] Source file: static_src\CompiledFunctionType.c
+[2021-04-08T19:02:07.410444 11176] Object file: static_src\CompiledFunctionType.o
+[2021-04-08T19:02:07.410444 11176] Trying direct lookup
+[2021-04-08T19:02:07.410444 11176] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/a/07d93e4cb93d41976f93aa45691817-78893.manifest
+[2021-04-08T19:02:07.413440 3960 ] Unlink C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/0/c6031c88d7085f760b1f8eb5325a25-415955.o.tmp.stdout.DESKTOP-67KPN07.3960.1QBI6D
+[2021-04-08T19:02:07.413440 3960 ] Unlink C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/0/c6031c88d7085f760b1f8eb5325a25-415955.o.tmp.stderr.DESKTOP-67KPN07.3960.SS92c3
+[2021-04-08T19:02:07.414441 3960 ] Copying __loader.o to C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/0/c6031c88d7085f760b1f8eb5325a25-415955.o via C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/0/c6031c88d7085f760b1f8eb5325a25-415955.o.DESKTOP-67KPN07.3960.1Apgjk (uncompressed)
+[2021-04-08T19:02:07.415443 3960 ] Stored in cache: __loader.o -> C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/0/c6031c88d7085f760b1f8eb5325a25-415955.o (copied)
+[2021-04-08T19:02:07.417440 3960 ] Added object file hash to C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/d/9399d12936da1484d73847cb9746af-3173.manifest
+[2021-04-08T19:02:07.418441 3960 ] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/stats.lock
+[2021-04-08T19:02:07.419441 3960 ] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/stats.lock
+[2021-04-08T19:02:07.420441 3960 ] Result: cache miss
+[2021-04-08T19:02:07.420441 3960 ] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/stats.lock
+[2021-04-08T19:02:07.421443 3960 ] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/1/stats.lock
+[2021-04-08T19:02:07.467440 11176] Got object file hash from manifest
+[2021-04-08T19:02:07.468443 11176] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/6/8/aa008148c5485304cd60e6f215b149-670496.o to static_src\CompiledFunctionType.o (uncompressed)
+[2021-04-08T19:02:07.468443 11176] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/6/8/aa008148c5485304cd60e6f215b149-670496.o -> static_src\CompiledFunctionType.o
+[2021-04-08T19:02:07.468443 11176] Succeeded getting cached result
+[2021-04-08T19:02:07.468443 11176] Result: cache hit (direct)
+[2021-04-08T19:02:07.469447 11176] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/6/stats.lock
+[2021-04-08T19:02:07.470444 11176] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/6/stats.lock
+[2021-04-08T19:02:07.486440 12516] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:07.486440 12516] Config: (default) base_dir = 
+[2021-04-08T19:02:07.486440 12516] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:07.486440 12516] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:07.486440 12516] Config: (default) compiler = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:07.486440 12516] Config: (default) compression = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) compression_level = 6
+[2021-04-08T19:02:07.486440 12516] Config: (default) cpp_extension = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) debug = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) depend_mode = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) direct_mode = true
+[2021-04-08T19:02:07.486440 12516] Config: (default) disable = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) hard_link = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) hash_dir = true
+[2021-04-08T19:02:07.486440 12516] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:07.486440 12516] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:07.486440 12516] Config: (default) max_files = 0
+[2021-04-08T19:02:07.486440 12516] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:07.486440 12516] Config: (default) path = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) prefix_command = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) read_only = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) read_only_direct = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) recache = false
+[2021-04-08T19:02:07.486440 12516] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:07.486440 12516] Config: (default) sloppiness = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) stats = true
+[2021-04-08T19:02:07.486440 12516] Config: (default) temporary_dir = 
+[2021-04-08T19:02:07.486440 12516] Config: (default) umask = 
+[2021-04-08T19:02:07.486440 12516] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o static_src\CompiledGeneratorType.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src static_src\CompiledGeneratorType.c
+[2021-04-08T19:02:07.487446 12516] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:07.487446 12516] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:07.487446 12516] Source file: static_src\CompiledGeneratorType.c
+[2021-04-08T19:02:07.487446 12516] Object file: static_src\CompiledGeneratorType.o
+[2021-04-08T19:02:07.487446 12516] Trying direct lookup
+[2021-04-08T19:02:07.487446 12516] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/2/9/d14e23586bf0f0777568963ae7dcd8-57342.manifest
+[2021-04-08T19:02:07.536435 12516] Got object file hash from manifest
+[2021-04-08T19:02:07.537445 12516] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/f/57e4a88831013aae37157b72556b74-763308.o to static_src\CompiledGeneratorType.o (uncompressed)
+[2021-04-08T19:02:07.537445 12516] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/f/57e4a88831013aae37157b72556b74-763308.o -> static_src\CompiledGeneratorType.o
+[2021-04-08T19:02:07.538438 12516] Succeeded getting cached result
+[2021-04-08T19:02:07.538438 12516] Result: cache hit (direct)
+[2021-04-08T19:02:07.538438 12516] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:07.539439 12516] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:07.649446 12608] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:07.649446 12608] Config: (default) base_dir = 
+[2021-04-08T19:02:07.649446 12608] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:07.649446 12608] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:07.649446 12608] Config: (default) compiler = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:07.649446 12608] Config: (default) compression = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) compression_level = 6
+[2021-04-08T19:02:07.649446 12608] Config: (default) cpp_extension = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) debug = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) depend_mode = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) direct_mode = true
+[2021-04-08T19:02:07.649446 12608] Config: (default) disable = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) hard_link = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) hash_dir = true
+[2021-04-08T19:02:07.649446 12608] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:07.649446 12608] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:07.649446 12608] Config: (default) max_files = 0
+[2021-04-08T19:02:07.649446 12608] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:07.649446 12608] Config: (default) path = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) prefix_command = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) read_only = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) read_only_direct = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) recache = false
+[2021-04-08T19:02:07.649446 12608] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:07.649446 12608] Config: (default) sloppiness = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) stats = true
+[2021-04-08T19:02:07.649446 12608] Config: (default) temporary_dir = 
+[2021-04-08T19:02:07.649446 12608] Config: (default) umask = 
+[2021-04-08T19:02:07.650444 12608] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o static_src\CompiledCodeHelpers.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src static_src\CompiledCodeHelpers.c
+[2021-04-08T19:02:07.650444 12608] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:07.650444 12608] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:07.650444 12608] Source file: static_src\CompiledCodeHelpers.c
+[2021-04-08T19:02:07.650444 12608] Object file: static_src\CompiledCodeHelpers.o
+[2021-04-08T19:02:07.650444 12608] Trying direct lookup
+[2021-04-08T19:02:07.650444 12608] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/4/2/c559557f2067aca40ca7c289361d7a-55417.manifest
+[2021-04-08T19:02:07.669444 12500] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:07.669444 12500] Config: (default) base_dir = 
+[2021-04-08T19:02:07.669444 12500] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:07.669444 12500] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:07.669444 12500] Config: (default) compiler = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:07.669444 12500] Config: (default) compression = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) compression_level = 6
+[2021-04-08T19:02:07.669444 12500] Config: (default) cpp_extension = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) debug = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) depend_mode = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) direct_mode = true
+[2021-04-08T19:02:07.669444 12500] Config: (default) disable = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) hard_link = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) hash_dir = true
+[2021-04-08T19:02:07.669444 12500] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:07.669444 12500] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:07.669444 12500] Config: (default) max_files = 0
+[2021-04-08T19:02:07.669444 12500] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:07.669444 12500] Config: (default) path = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) prefix_command = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) read_only = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) read_only_direct = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) recache = false
+[2021-04-08T19:02:07.669444 12500] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:07.669444 12500] Config: (default) sloppiness = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) stats = true
+[2021-04-08T19:02:07.669444 12500] Config: (default) temporary_dir = 
+[2021-04-08T19:02:07.669444 12500] Config: (default) umask = 
+[2021-04-08T19:02:07.669444 12500] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o static_src\InspectPatcher.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src static_src\InspectPatcher.c
+[2021-04-08T19:02:07.670441 12500] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:07.670441 12500] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:07.670441 12500] Source file: static_src\InspectPatcher.c
+[2021-04-08T19:02:07.670441 12500] Object file: static_src\InspectPatcher.o
+[2021-04-08T19:02:07.670441 12500] Trying direct lookup
+[2021-04-08T19:02:07.670441 12500] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/e/0/990d3e36fe3280ca1ee2c83ca75078-13576.manifest
+[2021-04-08T19:02:07.719443 12500] Got object file hash from manifest
+[2021-04-08T19:02:07.719443 12500] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/9/a5ea0fb0409981e4eb04cb140c5e95-596369.o to static_src\InspectPatcher.o (uncompressed)
+[2021-04-08T19:02:07.719443 12500] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/9/a5ea0fb0409981e4eb04cb140c5e95-596369.o -> static_src\InspectPatcher.o
+[2021-04-08T19:02:07.720440 12500] Succeeded getting cached result
+[2021-04-08T19:02:07.720440 12500] Result: cache hit (direct)
+[2021-04-08T19:02:07.720440 12500] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:07.721443 12500] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:07.779442 12912] === CCACHE 3.7.12 STARTED =========================================
+[2021-04-08T19:02:07.779442 12912] Config: (default) base_dir = 
+[2021-04-08T19:02:07.779442 12912] Config: (environment) cache_dir = C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache
+[2021-04-08T19:02:07.779442 12912] Config: (default) cache_dir_levels = 2
+[2021-04-08T19:02:07.779442 12912] Config: (default) compiler = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) compiler_check = mtime
+[2021-04-08T19:02:07.779442 12912] Config: (default) compression = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) compression_level = 6
+[2021-04-08T19:02:07.779442 12912] Config: (default) cpp_extension = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) debug = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) depend_mode = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) direct_mode = true
+[2021-04-08T19:02:07.779442 12912] Config: (default) disable = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) extra_files_to_hash = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) hard_link = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) hash_dir = true
+[2021-04-08T19:02:07.779442 12912] Config: (default) ignore_headers_in_manifest = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) keep_comments_cpp = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) limit_multiple = 0.8
+[2021-04-08T19:02:07.779442 12912] Config: (environment) log_file = C:\Users\Kieal\Desktop\Glace\rust\gen.build\ccache-10148.txt
+[2021-04-08T19:02:07.779442 12912] Config: (default) max_files = 0
+[2021-04-08T19:02:07.779442 12912] Config: (C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/ccache.conf) max_size = 5.0G
+[2021-04-08T19:02:07.779442 12912] Config: (default) path = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) pch_external_checksum = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) prefix_command = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) prefix_command_cpp = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) read_only = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) read_only_direct = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) recache = false
+[2021-04-08T19:02:07.779442 12912] Config: (default) run_second_cpp = true
+[2021-04-08T19:02:07.779442 12912] Config: (default) sloppiness = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) stats = true
+[2021-04-08T19:02:07.779442 12912] Config: (default) temporary_dir = 
+[2021-04-08T19:02:07.779442 12912] Config: (default) umask = 
+[2021-04-08T19:02:07.780441 12912] Command line: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\ccache\v3.7.12\ccache.exe C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\gcc\x86_64\10.2.0-11.0.0-8.0.0-r5\mingw64\bin\gcc.exe -o static_src\MetaPathBasedLoader.o -c -std=c11 -fvisibility=hidden -fwrapv -fpartial-inlining -ftrack-macro-expansion=0 -Wno-deprecated-declarations -fno-var-tracking -fcompare-debug-second -O3 -pipe -D_WIN32_WINNT=0x0501 -D__NUITKA_NO_ASSERT__ -DMS_WIN64 -D_NUITKA_CONSTANTS_FROM_RESOURCE -D_NUITKA_FROZEN=0 -D_NUITKA_EXE -IC:\Python39\include -I. -IC:\Python39\lib\SITE-P~1\nuitka\build\include -IC:\Python39\lib\SITE-P~1\nuitka\build\static_src static_src\MetaPathBasedLoader.c
+[2021-04-08T19:02:07.780441 12912] Hostname: DESKTOP-67KPN07
+[2021-04-08T19:02:07.780441 12912] Working directory: C:\Users\Kieal\Desktop\Glace\rust\gen.build
+[2021-04-08T19:02:07.780441 12912] Source file: static_src\MetaPathBasedLoader.c
+[2021-04-08T19:02:07.780441 12912] Object file: static_src\MetaPathBasedLoader.o
+[2021-04-08T19:02:07.780441 12912] Trying direct lookup
+[2021-04-08T19:02:07.780441 12912] Looking for object file hash in C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/e/9/dbc38bf57ded46c7a87a48f14027db-52211.manifest
+[2021-04-08T19:02:07.786439 12608] Got object file hash from manifest
+[2021-04-08T19:02:07.787444 12608] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/c/f/9f4be4469802c0581c9a709bec7a24-5577155.o to static_src\CompiledCodeHelpers.o (uncompressed)
+[2021-04-08T19:02:07.788441 12608] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/c/f/9f4be4469802c0581c9a709bec7a24-5577155.o -> static_src\CompiledCodeHelpers.o
+[2021-04-08T19:02:07.788441 12608] Succeeded getting cached result
+[2021-04-08T19:02:07.788441 12608] Result: cache hit (direct)
+[2021-04-08T19:02:07.788441 12608] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/c/stats.lock
+[2021-04-08T19:02:07.789439 12608] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/c/stats.lock
+[2021-04-08T19:02:07.870444 12912] Got object file hash from manifest
+[2021-04-08T19:02:07.871443 12912] Copying C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/0/85d4e05d7ff29d52212a9ac31b338a-2944491.o to static_src\MetaPathBasedLoader.o (uncompressed)
+[2021-04-08T19:02:07.871443 12912] Created from cache: C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/0/85d4e05d7ff29d52212a9ac31b338a-2944491.o -> static_src\MetaPathBasedLoader.o
+[2021-04-08T19:02:07.871443 12912] Succeeded getting cached result
+[2021-04-08T19:02:07.871443 12912] Result: cache hit (direct)
+[2021-04-08T19:02:07.872441 12912] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:07.872441 12912] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:08.017441 10368] Unlink C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/6/fa4a3309a28420d7aebf969321088a-639160.o.tmp.stdout.DESKTOP-67KPN07.10368.1QBI6D
+[2021-04-08T19:02:08.017441 10368] Unlink C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/6/fa4a3309a28420d7aebf969321088a-639160.o.tmp.stderr.DESKTOP-67KPN07.10368.SS92c3
+[2021-04-08T19:02:08.025435 10368] Copying module.glacec.o to C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/6/fa4a3309a28420d7aebf969321088a-639160.o via C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/6/fa4a3309a28420d7aebf969321088a-639160.o.DESKTOP-67KPN07.10368.1Apgjk (uncompressed)
+[2021-04-08T19:02:08.026440 10368] Stored in cache: module.glacec.o -> C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/6/fa4a3309a28420d7aebf969321088a-639160.o (copied)
+[2021-04-08T19:02:08.028439 10368] Added object file hash to C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/0/937f2f4d789557e157327b20f1feda-66706.manifest
+[2021-04-08T19:02:08.029439 10368] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/stats.lock
+[2021-04-08T19:02:08.030440 10368] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/stats.lock
+[2021-04-08T19:02:08.030440 10368] Result: cache miss
+[2021-04-08T19:02:08.031440 10368] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/stats.lock
+[2021-04-08T19:02:08.031440 10368] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/d/stats.lock
+[2021-04-08T19:02:08.340438 8524 ] Unlink C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/9/862299a59890cbd676d9114a38f1e6-688786.o.tmp.stdout.DESKTOP-67KPN07.8524.1QBI6D
+[2021-04-08T19:02:08.341442 8524 ] Unlink C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/9/862299a59890cbd676d9114a38f1e6-688786.o.tmp.stderr.DESKTOP-67KPN07.8524.SS92c3
+[2021-04-08T19:02:08.343437 8524 ] Copying module.__main__.o to C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/9/862299a59890cbd676d9114a38f1e6-688786.o via C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/9/862299a59890cbd676d9114a38f1e6-688786.o.DESKTOP-67KPN07.8524.1Apgjk (uncompressed)
+[2021-04-08T19:02:08.343437 8524 ] Stored in cache: module.__main__.o -> C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/9/862299a59890cbd676d9114a38f1e6-688786.o (copied)
+[2021-04-08T19:02:08.346441 8524 ] Added object file hash to C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/d/a200af3217b956136dffcfc5fede65-114603.manifest
+[2021-04-08T19:02:08.346441 8524 ] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:08.347440 8524 ] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/7/stats.lock
+[2021-04-08T19:02:08.347440 8524 ] Result: cache miss
+[2021-04-08T19:02:08.347440 8524 ] Acquired lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/stats.lock
+[2021-04-08T19:02:08.348439 8524 ] Releasing lock C:\Users\Kieal\AppData\Local\Nuitka\Nuitka\Cache\ccache/a/stats.lock

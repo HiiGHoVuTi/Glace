@@ -1,0 +1,29 @@
+
+# imports the piston GUI crate
+extern crate piston_window;
+use piston_window::*;
+
+main := None => Void: {
+
+    # creates a window
+  	PistonWindow * Mut: window = WindowSetting::new("Hello Piston", [640, 480])
+  			.exit_on_esc(true).build().unwrap();
+  
+    # while the window isn't closed
+  	while Some(event) = window.next() {
+
+        # draw next frame using a lambda
+      	window.draw_2d(Ref(event), (context, graphics, device => {
+
+            # clear the bg
+      		clear([1.0, 1.0, 1.0, 1.0], graphics);
+          	rectangle(  
+              	[1.0, 0.0, 0.0, 1.0],       # red
+          		[0.0, 0.0, 100.0, 100.0],   # coords of the rect
+          		context.transform,
+              	graphics
+          	);
+        }));
+
+  	};
+};
